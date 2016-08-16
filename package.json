@@ -1,0 +1,22 @@
+{
+  "name": "adapt-viewer",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klinker-consulting/adapt-viewer.git"
+  },
+  "keywords": [
+    "Adapt"
+  ],
+  "author": "Bryce Klinker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/klinker-consulting/adapt-viewer/issues"
+  },
+  "homepage": "https://github.com/klinker-consulting/adapt-viewer#readme"
+}
