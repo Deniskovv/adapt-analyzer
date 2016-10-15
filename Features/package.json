@@ -1,0 +1,23 @@
+{
+  "name": "adapt.analyzer.features",
+  "version": "0.0.1",
+  "main": " ",
+  "repository": {
+    "url": "https://github.com/klinker-consulting/adapt-viewer",
+    "type": "git"
+  },
+  "scripts": {
+    "pretest": "webdriver-manager update",
+    "test": "protractor"
+  },
+  "author": "Bryce Klinker\t",
+  "license": "MIT",
+  "dependencies": {
+    "@types/jasmine": "2.5.35",
+    "jasmine-core": "2.5.2",
+    "jasmine-spec-reporter": "2.7.0",
+    "protractor": "4.0.9",
+    "ts-node": "1.5.2",
+    "typescript": "2.0.3"
+  }
+}

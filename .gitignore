@@ -1,0 +1,8 @@
+# node
+node_modules/
+
+# dotnet
+packages/
+obj/
+bin/
+.vs/
