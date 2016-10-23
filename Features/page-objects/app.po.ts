@@ -5,7 +5,7 @@ export class AppPage {
         browser.get('/');
     }
 
-    get_title() {
-        return element(by.tagName('h3')).getText();
+    is_upload_button_enabled() {
+        return element(by.className('btn-upload')).isEnabled();
     }
 }

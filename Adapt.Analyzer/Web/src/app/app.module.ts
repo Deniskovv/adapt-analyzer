@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MaterialModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
+import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
     imports: [
-        BrowserModule
+        BrowserModule,
+        MaterialModule.forRoot()
     ],
     declarations: [
-        AppComponent
+        AppComponent,
+        UploadComponent
     ],
     bootstrap: [ AppComponent ]
 })

@@ -8,7 +8,7 @@ describe('App', () => {
         appPage.get();
     });
 
-    it('should say hello', () => {
-        expect(appPage.get_title()).toContain('Hello');
+    it('should allow upload', () => {
+        expect(appPage.is_upload_button_enabled()).toBeTruthy()
     });
 });
