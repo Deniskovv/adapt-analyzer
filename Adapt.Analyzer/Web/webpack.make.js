@@ -19,7 +19,7 @@ module.exports = function make(env) {
         module: {
             loaders: [
                 { test: /\.ts$/, loader: 'ts' },
-                { test: /\.(sass|css)$/, loader: 'raw!css!sass' },
+                { test: /\.(scss|css)$/, loader: 'to-string!css!sass' },
                 { test: /\.html$/, loader: 'html' },
                 { test: /\.json$/, loader: 'json' }
             ]

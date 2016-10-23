@@ -4,6 +4,7 @@ import { MaterialModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { UploadComponent } from './upload/upload.component';
+import { DatacardService } from './datacard/services/datacard.service';
 
 @NgModule({
     imports: [
@@ -13,6 +14,9 @@ import { UploadComponent } from './upload/upload.component';
     declarations: [
         AppComponent,
         UploadComponent
+    ],
+    providers: [
+        DatacardService
     ],
     bootstrap: [ AppComponent ]
 })
