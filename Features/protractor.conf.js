@@ -19,6 +19,14 @@ exports.config = {
   useAllAngular2AppRoots: true,
   beforeLaunch: function() {
     require('ts-node').register();
+
+    var Server = require('./helpers').Server;
+    this.server = new Server();
+    this.server.start();
+  },
+  
+  onCleanUp: function() {
+    this.server.stop();
   },
   onPrepare: function() {
     jasmine.getEnv().addReporter(new SpecReporter());

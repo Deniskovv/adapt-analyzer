@@ -6,9 +6,9 @@ describe('App', () => {
     beforeEach(() => {
         appPage = new AppPage();
         appPage.get();
-    })
+    });
 
     it('should say hello', () => {
         expect(appPage.get_title()).toContain('Hello');
-    })
-})
+    });
+});
