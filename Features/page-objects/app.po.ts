@@ -1,4 +1,4 @@
-import { browser, element } from 'protractor'
+import { browser, element, by } from 'protractor'
 
 export class AppPage {
     get() {
@@ -6,6 +6,6 @@ export class AppPage {
     }
 
     get_title() {
-        return element('h3').getText();
+        return element(by.tagName('h3')).getText();
     }
 }

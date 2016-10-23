@@ -5,7 +5,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = function make(env) {
     return {
-        devtool: 'source-map',
+        devtool: get_dev_tool(env),
         entry: get_entry(env),
         plugins: get_plugins(env),
         output: {
@@ -19,7 +19,7 @@ module.exports = function make(env) {
         module: {
             loaders: [
                 { test: /\.ts$/, loader: 'ts' },
-                { test: /\.(sass|css)$/, loader: 'to-string!css!sass' },
+                { test: /\.(sass|css)$/, loader: 'raw!css!sass' },
                 { test: /\.html$/, loader: 'html' },
                 { test: /\.json$/, loader: 'json' }
             ]
@@ -27,8 +27,23 @@ module.exports = function make(env) {
     };
 }
 
+function get_dev_tool(env) {
+    if (is_test(env))
+        return 'inline-source-map';
+
+    if (is_prod(env))
+        return 'cheap-module-source-map';
+    
+    return 'source-map';
+}
+
 function get_plugins(env) {
     let plugins = [
+        new webpack.DefinePlugin({
+            'process.env': {
+                'ENV': JSON.stringify(env)
+            }
+        }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'src/index.html',
@@ -36,6 +51,14 @@ function get_plugins(env) {
         })
     ];
 
+    if (is_test(env))
+        return plugins;
+
+
+    plugins.push(new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks: Infinity
+    }))
     if (is_prod(env)) {
         plugins.push(new webpack.optimize.UglifyJsPlugin());
         plugins.push(new webpack.optimize.DedupePlugin());
@@ -54,8 +77,8 @@ function get_entry(env) {
         return undefined;
 
     return {
-        app: './src/main.ts',
-        vendor: './src/vendor.ts'
+        vendor: './src/vendor.ts',
+        app: './src/main.ts'
     };
 }
 
