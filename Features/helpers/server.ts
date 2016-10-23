@@ -8,7 +8,7 @@ export class Server {
     static api_dir = join(Server.analyzer_dir, 'Api');
     static web_dir = join(Server.analyzer_dir, 'Web');
     static api_exe = join(Server.analyzer_dir, 'bin', 'Release', 'Adapt.Analyzer.Api.Host.exe');
-    static ms_build_path = `"${join('C:', 'Program Files (x86)', 'msbuild', '12.0', 'bin', 'msbuild.exe')}"`
+    static ms_build_path = `"${join('C:', 'Program Files (x86)', 'msbuild', '14.0', 'bin', 'msbuild.exe')}"`
     api_process: ChildProcess
 
     start() {
@@ -37,6 +37,7 @@ export class Server {
         let api_running = false;
         this.api_process = this.run_command(Server.api_exe, ['4200']);
         this.api_process.stdout.on('data', (data: string) => {
+            console.log(`API: ${data}`)
             if (data.indexOf('Now Listening') > -1)
                 api_running = true;
         });

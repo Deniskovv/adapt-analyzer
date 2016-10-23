@@ -1,5 +1,7 @@
-﻿using System.Web.Http;
+﻿using System.IO;
+using System.Web.Http;
 using Microsoft.Owin;
+using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 using Owin;
 
@@ -14,7 +16,8 @@ namespace Adapt.Analzyer.Api
             app.UseWebApi(CreateConfig())
                 .UseFileServer(new FileServerOptions
                 {
-                    EnableDefaultFiles = true
+                    EnableDefaultFiles = true,
+                    FileSystem = new PhysicalFileSystem(Path.Combine(Directory.GetCurrentDirectory()))
                 });
         }
 
