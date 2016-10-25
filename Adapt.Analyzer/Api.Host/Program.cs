@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using Adapt.Analzyer.Api;
 using Microsoft.Owin.Hosting;
 
@@ -12,7 +11,6 @@ namespace Adapt.Analyzer.Api.Host
             var port = args.Length > 0 ? args[0] : "5000";
             using (WebApp.Start<Startup>($"http://localhost:{port}"))
             {
-                Console.WriteLine($"Root directory: {Directory.GetCurrentDirectory()}");
                 Console.WriteLine($"Now Listening on {port}...");
                 Console.Read();
             }
