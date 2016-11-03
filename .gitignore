@@ -1,12 +1,13 @@
 # node
 node_modules/
 typings/
-
-# elm
-elm-stuff/
+dist/
 
 # dotnet
 packages/
 obj/
 bin/
 .vs/
+
+# WebStorm
+.idea/
