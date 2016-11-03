@@ -1,10 +1,4 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { enableProdMode } from '@angular/core';
+import * as angular from 'angular';
 
-import { AppModule } from './app/app.module';
-
-if (process.env.ENV === 'prod') {
-    enableProdMode();
-}
-
-platformBrowserDynamic().bootstrapModule(AppModule);
+angular.module('adapt.analyzer', ['ngMaterial', 'ui.router']);
+import './app/app.component';

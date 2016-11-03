@@ -1,0 +1,22 @@
+<md-sidenav class="md-sidenav-left" md-component-id="left">
+    <header>
+        <h3>Adapt Analyzer</h3>
+    </header>
+</md-sidenav>
+
+<div layout="column" role="main" flex>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button class="toggle-sidenav md-icon-button" ng-click="$ctrl.toggleSidenav()">
+                <md-icon>menu</md-icon>
+            </md-button>
+
+            <upload></upload>
+        </div>
+    </md-toolbar>
+
+    <md-content layout="column" flex md-scroll-y>
+        <div layout-padding flex="noshrink" ui-view>
+        </div>
+    </md-content>
+</div>

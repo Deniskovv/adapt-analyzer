@@ -2,6 +2,9 @@
 node_modules/
 typings/
 
+# elm
+elm-stuff/
+
 # dotnet
 packages/
 obj/

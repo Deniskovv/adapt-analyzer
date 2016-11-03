@@ -1,14 +1,14 @@
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine'],
     files: [
-      'src/spec-bundle.ts'
+      './src/spec-bundle.ts'
     ],
     exclude: [
     ],
     preprocessors: {
-      'src/spec-bundle.ts': ['webpack', 'sourcemap']
+      './src/spec-bundle.ts': ['webpack']
     },
     reporters: ['spec'],
     port: 9876,

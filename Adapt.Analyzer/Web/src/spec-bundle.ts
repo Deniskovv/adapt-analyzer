@@ -1,37 +1,17 @@
-require('./vendor');
+import './vendor';
+import './main';
+import * as angular from 'angular';
 
-require('zone.js/dist/proxy');
-require('zone.js/dist/sync-test');
-require('zone.js/dist/jasmine-patch');
-require('zone.js/dist/async-test');
-require('zone.js/dist/fake-async-test');
+import 'angular-mocks';
 
-import { NgModule } from '@angular/core';
-import { XHRBackend } from '@angular/http'
-
-import { TestBed } from '@angular/core/testing';
-import { MockBackend, MockConnection } from '@angular/http/testing';
-import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-
-import { AppModule } from './app/app.module';
-
-@NgModule({
-    imports: [
-        BrowserDynamicTestingModule,
-        AppModule
-    ],
-    providers:[
-        { provide: XHRBackend, useClass: MockBackend}
-    ]
-})
-class TestingModule {}
-
+let context = (<any>require).context('.', true, /\.spec\.ts$/);
 describe('Adapt Analyzer', () => {
-    beforeAll(() => {
-        TestBed.initTestEnvironment(TestingModule, platformBrowserDynamicTesting())
-    })
+    beforeEach(angular.mock.module('adapt.analyzer'))
 
-    var context = (<any>require).context('.', true, /\.spec\.ts/);
+    beforeEach(angular.mock.inject((_$httpBackend_: angular.IHttpBackendService) => {
+        _$httpBackend_.whenGET('/config.json')
+            .respond({ api_url: 'http://localhost:5000' });
+    }));
+
     context.keys().forEach(context);
-})
-
+});

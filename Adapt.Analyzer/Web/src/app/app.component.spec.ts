@@ -1,21 +1,38 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { MaterialModule, MdSidenavLayout } from '@angular/material';
+import * as angular from 'angular';
 
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-    let fixture: ComponentFixture<AppComponent>;
+    let appDirective: angular.IDirective;
+    let $scope: angular.IScope;
+    let createComponent: () => angular.IAugmentedJQuery; 
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(AppComponent);
-    })
+    beforeEach(angular.mock.inject((_$injector_, _$compile_: angular.ICompileService, _$rootScope_) => {
+        $scope = _$rootScope_.$new();
+        appDirective = _$injector_.get('appDirective')[0];
 
-    it('should have title', () => {
-        expect(fixture.nativeElement.innerText).toContain('Adapt Analyzer');
+        createComponent = () => {
+            return _$compile_('<app></app>')($scope);
+        }
+    }));
+
+    it('should define app component', () =>{
+        expect(appDirective.controller).toBe(AppComponent);
+        expect(appDirective.template).toBe(require('./templates/app.template'))
     });
 
-    it('should have upload button', () => {
-        let upload_button = fixture.nativeElement.querySelector('.btn-upload');
-        expect(upload_button.disabled).toBeFalsy();
+    it('should show sidenav', () => {
+        let component = createComponent();
+        let sidenavElement = angular.element(component[0].querySelector('md-sidenav'));
+        let element = angular.element(component[0].querySelector('.toggle-sidenav'));
+        element.triggerHandler('click');
+        expect(sidenavElement.hasClass('md-closed')).toBeFalsy();
     });
-});
+
+    it('should use upload component', () => {
+        let component = createComponent();
+
+        let uploadElement = angular.element(component[0].querySelectorAll('upload'));
+        expect(uploadElement.length).toBe(1);
+    });
+})
