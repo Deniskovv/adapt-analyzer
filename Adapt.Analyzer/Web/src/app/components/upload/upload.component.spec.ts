@@ -41,6 +41,15 @@ describe('UploadComponent', () => {
         expect($state.go).toHaveBeenCalledWith(datacardState, { id: 'datacardid' });
     });
 
+    it('should have datacard name', () => {
+        let files = [{ name: 'bob' }];
+        setupPostDatacard(files, 'datacardid')
+
+        controller.handleFileChanged(files)
+        $httpBackend.flush();
+        expect(controller.datacardName).toBe('bob');
+    })
+
     afterEach(() => {
         $httpBackend.verifyNoOutstandingExpectation();
         $httpBackend.verifyNoOutstandingRequest();

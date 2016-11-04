@@ -1,3 +1,4 @@
+import * as angular from 'angular';
 import { IState } from 'angular-ui-router';
 
 import './datacard.component';
@@ -6,3 +7,7 @@ export const datacardState: IState = {
     url: '/datacards/:id',
     template: '<datacard></datacard>'
 }
+angular.module('adapt.analyzer')
+    .config(['$stateProvider', ($stateProvider: angular.ui.IStateProvider) => {
+        $stateProvider.state(datacardState);
+    }])

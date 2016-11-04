@@ -10,7 +10,6 @@ namespace Adapt.Analyzer.Api.Test.Datacards.Upload
     [TestFixture]
     public class UploadControllerTest
     {
-        private const string DataCardsDirectory = "something goes here";
         private UploadController _uploadController;
         private DatacardWriterFake _datacardWriterFake;
 

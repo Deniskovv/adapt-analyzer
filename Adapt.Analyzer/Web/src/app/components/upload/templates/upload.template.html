@@ -1,3 +1,10 @@
-<div>
-    <input type="file" ng-model="$ctrl.selectedFile" onchange="angular.element(this).scope().$ctrl.handleFileChanged(this)"/>
+<div layout="row">
+    <label class="md-icon-button upload-button">
+        <md-icon>file_upload</md-icon>
+        <input type="file" class="ng-hide" onchange="angular.element(this).scope().$ctrl.handleFileChanged(this.files)"/>
+    </label>
+    <h2 class="datacard-name">
+        {{ $ctrl.datacardName }}
+    </h2>
+
 </div>
