@@ -1,21 +1,23 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
+using Adapt.Analyzer.Core.General;
 using NUnit.Framework;
+using Directory = System.IO.Directory;
 
 namespace Adapt.Analyzer.Core.Test.General
 {
     [TestFixture]
-    public class FileTest
+    public class FileSystemTest
     {
         private string _filePath;
         private string _directoryPath;
-        private Core.General.File _file;
+        private FileSystem _fileSystem;
 
         [SetUp]
         public void Setup()
         {
-            _file = new Core.General.File();
+            _fileSystem = new FileSystem();
         }
 
         [Test]
@@ -24,7 +26,7 @@ namespace Adapt.Analyzer.Core.Test.General
             var bytes = new byte[] {34, 34, 1, 23, 5, 4, 2};
             _filePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
 
-            _file.WriteAllBytes(_filePath, bytes);
+            _fileSystem.WriteAllBytes(_filePath, bytes);
             Assert.AreEqual(bytes, File.ReadAllBytes(_filePath));
         }
 
@@ -34,8 +36,18 @@ namespace Adapt.Analyzer.Core.Test.General
             var zipFilePath = CreateZipFile();
             var destination = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
 
-            _file.ExtractZip(zipFilePath, destination);
+            _fileSystem.ExtractZip(zipFilePath, destination);
             Assert.AreEqual(Directory.GetFiles(_directoryPath).Length, Directory.GetFiles(destination).Length);
+        }
+
+        [Test]
+        public void DirectoryExistsShouldBeTrue()
+        {
+            _directoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(_directoryPath);
+
+            var exists = _fileSystem.DirectoryExists(_directoryPath);
+            Assert.True(exists);
         }
 
         [TearDown]

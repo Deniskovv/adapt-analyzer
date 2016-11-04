@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Web.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.FileSystems;
@@ -15,6 +14,7 @@ namespace Adapt.Analzyer.Api
         public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll)
+                .UseErrorPage()
                 .UseWebApi(HttpConfigFactory.Create())
                 .UseFileServer(new FileServerOptions
                 {

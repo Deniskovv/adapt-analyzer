@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Newtonsoft.Json.Serialization;
 
 namespace Adapt.Analzyer.Api
 {
@@ -8,6 +9,7 @@ namespace Adapt.Analzyer.Api
         {
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             return config;
         }
     }

@@ -2,13 +2,15 @@
 
 namespace Fakes.General
 {
-    public class FileFake : IFile
+    public class FileSystemFake : IFileSystem
     {
         public string WrittenFile { get; private set; }
         public byte[] WrittenBytes { get; private set; }
 
         public string ZipFilePath { get; private set; }
         public string DestinationPath { get; private set; }
+
+        public bool DoesDirectoryExist { get; set; }
 
         public void WriteAllBytes(string path, byte[] bytes)
         {
@@ -20,6 +22,11 @@ namespace Fakes.General
         {
             ZipFilePath = zipFilePath;
             DestinationPath = destinationPath;
+        }
+
+        public bool DirectoryExists(string directoryPath)
+        {
+            return DoesDirectoryExist;
         }
     }
 }

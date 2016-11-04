@@ -14,7 +14,7 @@ namespace Adapt.Analyzer.Core.Test.Datacards
     {
         private const string DataCardsDirectory = "this is a directory";
         private ConfigFake _configFake;
-        private FileFake _fileFake;
+        private FileSystemFake _fileSystemFake;
         private PluginFactoryFake _pluginFactory;
         private string _id;
         private Datacard _datacard;
@@ -27,10 +27,10 @@ namespace Adapt.Analyzer.Core.Test.Datacards
             _configFake = new ConfigFake();
             _configFake.SetSetting("datacards-dir", DataCardsDirectory);
 
-            _fileFake = new FileFake();
+            _fileSystemFake = new FileSystemFake();
             _pluginFactory = new PluginFactoryFake();
 
-            var datacardExtractor = new DatacardExtractor(new DatacardPath(_configFake), _fileFake);
+            var datacardExtractor = new DatacardExtractor(new DatacardPath(_configFake), _fileSystemFake);
             _datacard = new Datacard(_id, datacardExtractor, _pluginFactory);
         }
 

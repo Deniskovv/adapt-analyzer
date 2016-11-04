@@ -60,7 +60,7 @@
     <Compile Include="Datacards\DatacardFake.cs" />
     <Compile Include="Datacards\Save\DatacardWriterFake.cs" />
     <Compile Include="General\ConfigFake.cs" />
-    <Compile Include="General\FileFake.cs" />
+    <Compile Include="General\FileSystemFake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

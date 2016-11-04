@@ -12,18 +12,18 @@ namespace Adapt.Analyzer.Core.Datacards.Save
 
     public class DatacardWriter : IDatacardWriter
     {
-        private readonly IFile _file;
+        private readonly IFileSystem _fileSystem;
         private readonly string _datacardsDirectory;
 
         public DatacardWriter()
-            : this(new Config(), new General.File())
+            : this(new Config(), new General.FileSystem())
         {
             
         }
 
-        public DatacardWriter(IConfig config, IFile file)
+        public DatacardWriter(IConfig config, IFileSystem fileSystem)
         {
-            _file = file;
+            _fileSystem = fileSystem;
             _datacardsDirectory = config.GetSetting("datacards-dir");
         }
 
@@ -31,7 +31,7 @@ namespace Adapt.Analyzer.Core.Datacards.Save
         {
             var id = Guid.NewGuid();
             var datacardPath = Path.Combine(_datacardsDirectory, id + ".zip");
-            _file.WriteAllBytes(datacardPath, bytes);
+            _fileSystem.WriteAllBytes(datacardPath, bytes);
             return Task.FromResult(id.ToString());
         }
     }

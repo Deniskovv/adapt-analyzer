@@ -1,24 +1,30 @@
-﻿
+﻿using System.IO;
 using System.IO.Compression;
 
 namespace Adapt.Analyzer.Core.General
 {
-    public interface IFile
+    public interface IFileSystem
     {
         void WriteAllBytes(string path, byte[] bytes);
         void ExtractZip(string zipFilePath, string destinationPath);
+        bool DirectoryExists(string directoryPath);
     }
 
-    public class File : IFile
+    public class FileSystem : IFileSystem
     {
         public void WriteAllBytes(string path, byte[] bytes)
         {
-            System.IO.File.WriteAllBytes(path, bytes);
+            File.WriteAllBytes(path, bytes);
         }
 
         public void ExtractZip(string zipFilePath, string destinationPath)
         {
             ZipFile.ExtractToDirectory(zipFilePath, destinationPath);
+        }
+
+        public bool DirectoryExists(string directoryPath)
+        {
+            return Directory.Exists(directoryPath);
         }
     }
 }

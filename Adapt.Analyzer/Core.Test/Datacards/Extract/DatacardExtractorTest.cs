@@ -12,7 +12,7 @@ namespace Adapt.Analyzer.Core.Test.Datacards.Extract
     {
         private const string DatacardsDirectory = "/my/new/dir";
         private ConfigFake _configFake;
-        private FileFake _fileFake;
+        private FileSystemFake _fileSystemFake;
         private DatacardExtractor _datacardExtractor;
 
         [SetUp]
@@ -21,9 +21,9 @@ namespace Adapt.Analyzer.Core.Test.Datacards.Extract
             _configFake = new ConfigFake();
             _configFake.SetSetting("datacards-dir", DatacardsDirectory);
 
-            _fileFake = new FileFake();
+            _fileSystemFake = new FileSystemFake();
             var datacardPath = new DatacardPath(_configFake);
-            _datacardExtractor = new DatacardExtractor(datacardPath, _fileFake);
+            _datacardExtractor = new DatacardExtractor(datacardPath, _fileSystemFake);
         }
 
         [Test]
@@ -33,7 +33,19 @@ namespace Adapt.Analyzer.Core.Test.Datacards.Extract
 
             var datacardPath = _datacardExtractor.Extract(id);
             Assert.AreEqual(Path.Combine(DatacardsDirectory, id), datacardPath);
-            Assert.AreEqual(Path.Combine(DatacardsDirectory, id + ".zip"), _fileFake.ZipFilePath);
+            Assert.AreEqual(Path.Combine(DatacardsDirectory, id + ".zip"), _fileSystemFake.ZipFilePath);
+        }
+
+        [Test]
+        public void ShouldNotExtractDatacardIfAlreadyExtracted()
+        {
+            _fileSystemFake.DoesDirectoryExist = true;
+
+            var id = Guid.NewGuid().ToString();
+
+            var datacardPath = _datacardExtractor.Extract(id);
+            Assert.Null(_fileSystemFake.ZipFilePath);
+            Assert.AreEqual(Path.Combine(DatacardsDirectory, id), datacardPath);
         }
     }
 }

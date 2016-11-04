@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Adapt.Analyzer.Core.General;
-using File = Adapt.Analyzer.Core.General.File;
 
 namespace Adapt.Analyzer.Core.Datacards.Extract
 {
@@ -11,27 +10,29 @@ namespace Adapt.Analyzer.Core.Datacards.Extract
 
     public class DatacardExtractor : IDatacardExtractor
     {
-        private readonly IFile _file;
+        private readonly IFileSystem _fileSystem;
         private readonly IDatacardPath _datacardPath;
 
         public DatacardExtractor()
-            : this(new DatacardPath(), new File())
+            : this(new DatacardPath(), new FileSystem())
         {
             
         }
 
-        public DatacardExtractor(IDatacardPath datacardPath, IFile file)
+        public DatacardExtractor(IDatacardPath datacardPath, IFileSystem fileSystem)
         {
-            _file = file;
+            _fileSystem = fileSystem;
             _datacardPath = datacardPath;
         }
 
         public string Extract(string datacardId)
         {
+            var destination = _datacardPath.GetExtractPath(datacardId);
+            if (_fileSystem.DirectoryExists(destination))
+                return destination;
 
             var zipFilePath = _datacardPath.GetZipFilePath(datacardId);
-            var destination = _datacardPath.GetExtractPath(datacardId);
-            _file.ExtractZip(zipFilePath, destination);
+            _fileSystem.ExtractZip(zipFilePath, destination);
             return destination;
         }
     }
