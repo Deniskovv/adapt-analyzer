@@ -30,7 +30,7 @@ namespace Adapt.Analyzer.Core.Test.Datacards
             _fileFake = new FileFake();
             _pluginFactory = new PluginFactoryFake();
 
-            var datacardExtractor = new DatacardExtractor(_configFake, _fileFake);
+            var datacardExtractor = new DatacardExtractor(new DatacardPath(_configFake), _fileFake);
             _datacard = new Datacard(_id, datacardExtractor, _pluginFactory);
         }
 

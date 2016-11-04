@@ -12,25 +12,25 @@ namespace Adapt.Analyzer.Core.Datacards.Extract
     public class DatacardExtractor : IDatacardExtractor
     {
         private readonly IFile _file;
-        private readonly string _datacardsDirectory;
+        private readonly IDatacardPath _datacardPath;
 
         public DatacardExtractor()
-            : this(new Config(), new File())
+            : this(new DatacardPath(), new File())
         {
             
         }
 
-        public DatacardExtractor(IConfig config, IFile file)
+        public DatacardExtractor(IDatacardPath datacardPath, IFile file)
         {
             _file = file;
-            _datacardsDirectory = config.GetSetting("datacards-dir");
+            _datacardPath = datacardPath;
         }
 
         public string Extract(string datacardId)
         {
-            
-            var zipFilePath = Path.Combine(_datacardsDirectory, datacardId + ".zip");
-            var destination = Path.Combine(_datacardsDirectory, datacardId);
+
+            var zipFilePath = _datacardPath.GetZipFilePath(datacardId);
+            var destination = _datacardPath.GetExtractPath(datacardId);
             _file.ExtractZip(zipFilePath, destination);
             return destination;
         }

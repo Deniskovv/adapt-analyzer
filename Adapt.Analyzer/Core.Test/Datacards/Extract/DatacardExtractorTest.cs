@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Adapt.Analyzer.Core.Datacards;
 using Adapt.Analyzer.Core.Datacards.Extract;
 using Fakes.General;
 using NUnit.Framework;
@@ -21,7 +22,8 @@ namespace Adapt.Analyzer.Core.Test.Datacards.Extract
             _configFake.SetSetting("datacards-dir", DatacardsDirectory);
 
             _fileFake = new FileFake();
-            _datacardExtractor = new DatacardExtractor(_configFake, _fileFake);
+            var datacardPath = new DatacardPath(_configFake);
+            _datacardExtractor = new DatacardExtractor(datacardPath, _fileFake);
         }
 
         [Test]

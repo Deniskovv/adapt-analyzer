@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Datacards\Datacard.cs" />
     <Compile Include="Datacards\DatacardFactory.cs" />
+    <Compile Include="Datacards\DatacardPath.cs" />
     <Compile Include="Datacards\Extract\DatacardExtractor.cs" />
     <Compile Include="Datacards\Models\Plugin.cs" />
     <Compile Include="Datacards\Save\DatacardWriter.cs" />

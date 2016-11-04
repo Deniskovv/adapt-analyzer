@@ -17,7 +17,7 @@ namespace Adapt.Analyzer.Core.Datacards
     {
         private readonly IPluginFactory _pluginFactory;
         private readonly IDatacardExtractor _datacardExtractor;
-
+        
         public string Id { get; }
 
         public Datacard(string id)
