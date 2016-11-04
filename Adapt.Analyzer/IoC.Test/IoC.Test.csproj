@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B8BEA974-DE15-4B82-8C06-FBE1CE7FD56E}</ProjectGuid>
+    <ProjectGuid>{73C9234F-3881-4E69-9417-CB1CDF1AACF4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Fakes</RootNamespace>
-    <AssemblyName>Fakes</AssemblyName>
+    <RootNamespace>Adapt.Analyzer.IoC.Test</RootNamespace>
+    <AssemblyName>Adapt.Analyzer.IoC.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,16 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AgGateway.ADAPT.ApplicationDataModel, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AgGatewayADAPTFramework.1.1.0.6\lib\AgGateway.ADAPT.ApplicationDataModel.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="AgGateway.ADAPT.PluginManager, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AgGatewayADAPTFramework.1.1.0.6\lib\AgGateway.ADAPT.PluginManager.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="AgGateway.ADAPT.Representation, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AgGatewayADAPTFramework.1.1.0.6\lib\AgGateway.ADAPT.Representation.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -52,29 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgGateway\ExportArgs.cs" />
-    <Compile Include="AgGateway\ImportArgs.cs" />
-    <Compile Include="AgGateway\PluginFactoryFake.cs" />
-    <Compile Include="AgGateway\PredicatePlugin.cs" />
-    <Compile Include="Datacards\DatacardFactoryFake.cs" />
-    <Compile Include="Datacards\DatacardFake.cs" />
-    <Compile Include="Datacards\Save\DatacardWriterFake.cs" />
-    <Compile Include="General\ConfigFake.cs" />
-    <Compile Include="General\FileFake.cs" />
+    <Compile Include="ContainerTest.cs" />
+    <Compile Include="DependencyResolverTest.cs" />
+    <Compile Include="Fakes\AmASingleton.cs" />
+    <Compile Include="Fakes\AmATransient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{2BE3C5C7-E84D-429F-98B5-FBB09BE12E3F}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\RepresentationSystem.xml" />
-    <Content Include="Resources\UnitSystem.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fakes\Fakes.csproj">
+      <Project>{B8BEA974-DE15-4B82-8C06-FBE1CE7FD56E}</Project>
+      <Name>Fakes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IoC\IoC.csproj">
+      <Project>{23E9AB42-5FB3-4B9A-B315-F324A59AAAE3}</Project>
+      <Name>IoC</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -76,11 +76,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HttpConfigFactoryTest.cs" />
-    <Compile Include="IoC\DependencyResolverTest.cs" />
+    <Compile Include="Datacards\Plugins\PluginsControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartupTest.cs" />
-    <Compile Include="Upload\UploadControllerTest.cs" />
+    <Compile Include="Datacards\Upload\UploadControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

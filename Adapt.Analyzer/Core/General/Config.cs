@@ -1,5 +1,4 @@
 ﻿using System.Configuration;
-using Adapt.Analyzer.Core.IoC;
 
 namespace Adapt.Analyzer.Core.General
 {
@@ -8,7 +7,6 @@ namespace Adapt.Analyzer.Core.General
         string GetSetting(string key);
     }
 
-    [Dependency(typeof(IConfig))]
     public class Config : IConfig
     {
         public string GetSetting(string key)

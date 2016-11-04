@@ -125,12 +125,12 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Datacards\Plugins\PluginsController.cs" />
     <Compile Include="HelloController.cs" />
     <Compile Include="HttpConfigFactory.cs" />
-    <Compile Include="IoC\DependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Upload\UploadController.cs" />
+    <Compile Include="Datacards\Upload\UploadController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.IO.Compression;
 using NUnit.Framework;
-using File = Adapt.Analyzer.Core.General.File;
 
 namespace Adapt.Analyzer.Core.Test.General
 {
@@ -9,12 +9,13 @@ namespace Adapt.Analyzer.Core.Test.General
     public class FileTest
     {
         private string _filePath;
-        private File _file;
+        private string _directoryPath;
+        private Core.General.File _file;
 
         [SetUp]
         public void Setup()
         {
-            _file = new File();
+            _file = new Core.General.File();
         }
 
         [Test]
@@ -24,14 +25,40 @@ namespace Adapt.Analyzer.Core.Test.General
             _filePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
 
             _file.WriteAllBytes(_filePath, bytes);
-            Assert.AreEqual(bytes, System.IO.File.ReadAllBytes(_filePath));
+            Assert.AreEqual(bytes, File.ReadAllBytes(_filePath));
+        }
+
+        [Test]
+        public void ExtractZipShouldExtractZipFile()
+        {
+            var zipFilePath = CreateZipFile();
+            var destination = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+
+            _file.ExtractZip(zipFilePath, destination);
+            Assert.AreEqual(Directory.GetFiles(_directoryPath).Length, Directory.GetFiles(destination).Length);
         }
 
         [TearDown]
         public void Teardown()
         {
-            if (System.IO.File.Exists(_filePath))
-                System.IO.File.Delete(_filePath);
+            if (File.Exists(_filePath))
+                File.Delete(_filePath);
+
+            if (Directory.Exists(_directoryPath))
+                Directory.Delete(_directoryPath, true);
+        }
+
+        private string CreateZipFile()
+        {
+            _directoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(_directoryPath);
+            File.WriteAllText(Path.Combine(_directoryPath, "file1.txt"), "data");
+            File.WriteAllText(Path.Combine(_directoryPath, "file2.txt"), "other");
+            File.WriteAllText(Path.Combine(_directoryPath, "file3.txt"), "not here");
+
+            var zipFilePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".zip");
+            ZipFile.CreateFromDirectory(_directoryPath, zipFilePath);
+            return zipFilePath;
         }
     }
 }
