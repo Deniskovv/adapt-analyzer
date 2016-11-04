@@ -7,17 +7,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4F60B381-D2D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C09201F0-4DD0-42AE-A8CB-0CEB5C8F3458}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{2BE3C5C7-E84D-429F-98B5-FBB09BE12E3F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Adapt.Analyzer\Core\Core.csproj", "{2BE3C5C7-E84D-429F-98B5-FBB09BE12E3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Test", "Core.Test\Core.Test.csproj", "{C7C7C0C2-A0DA-4D1E-B0FD-D9045EFE83CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Test", "Adapt.Analyzer\Core.Test\Core.Test.csproj", "{C7C7C0C2-A0DA-4D1E-B0FD-D9045EFE83CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{E187C97E-9A2E-4D55-8D47-81C4E503B1F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Adapt.Analyzer\Api\Api.csproj", "{E187C97E-9A2E-4D55-8D47-81C4E503B1F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Test", "Api.Test\Api.Test.csproj", "{4D4FA85A-C7DA-43FA-A6DE-354F7EAC2877}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Test", "Adapt.Analyzer\Api.Test\Api.Test.csproj", "{4D4FA85A-C7DA-43FA-A6DE-354F7EAC2877}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Host", "Api.Host\Api.Host.csproj", "{7220B520-AA61-44FE-AE30-56C910660928}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Host", "Adapt.Analyzer\Api.Host\Api.Host.csproj", "{7220B520-AA61-44FE-AE30-56C910660928}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fakes", "Fakes\Fakes.csproj", "{B8BEA974-DE15-4B82-8C06-FBE1CE7FD56E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fakes", "Adapt.Analyzer\Fakes\Fakes.csproj", "{B8BEA974-DE15-4B82-8C06-FBE1CE7FD56E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
