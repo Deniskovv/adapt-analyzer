@@ -1,9 +1,10 @@
 import * as angular from 'angular';
 
-import { Plugin } from './models/plugin';
+import { Plugin } from '../../shared';
 import { DatacardComponent } from './datacard.component';
 
 describe('DatacardComponent', () => {
+    let $injector: angular.auto.IInjectorService;
     let $httpBackend: angular.IHttpBackendService;
     let datacardDirective: angular.IDirective;
     let $state: angular.ui.IStateService;
@@ -11,6 +12,7 @@ describe('DatacardComponent', () => {
 
     beforeEach(angular.mock.inject((_$injector_, _$httpBackend_, _$state_, _$rootScope_, _$compile_) => {
         $state = _$state_
+        $injector = _$injector_;
         $httpBackend = _$httpBackend_;
         datacardDirective = _$injector_.get('datacardDirective')[0];
         
@@ -27,41 +29,36 @@ describe('DatacardComponent', () => {
         expect(datacardDirective.template).toBe(require('./templates/datacard.template'));
     });
 
-    it('should display plugins', () => {
-        let plugins = createPlugins();
-        setupGetPlugins(plugins, 'someid');
-
+    it('should have tab for maps', () => {
         let component = createComponent();
-        $httpBackend.flush();
-
-        expectPlugins(plugins, angular.element(component[0].querySelectorAll('.plugin')))
+        let tabElement = angular.element(component.find('md-tab')[0]);
+        expect(tabElement.attr('label')).toBe('Maps');
     });
 
-    afterEach(() => {
-        $httpBackend.verifyNoOutstandingExpectation();
-        $httpBackend.verifyNoOutstandingRequest();
+    it('should have tab for metadata', () => {
+        let component = createComponent();
+        let tabElement = angular.element(component.find('md-tab')[1]);
+        expect(tabElement.attr('label')).toBe('Metadata');
     });
 
-    function createPlugins(): Plugin[] {
-        return [
-            { name: 'Plugin1', version: '4.3.1' }, 
-            { name: 'Plugin3', version: '7.3.4' }
-        ];
-    }
+    it('should have tab for totals', () => {
+        let component = createComponent();
+        let tabElement = angular.element(component.find('md-tab')[2]);
+        expect(tabElement.attr('label')).toBe('Totals');
+    });
 
-    function setupGetPlugins(plugins, id) {
-        $state.params['id'] = id;
-        $httpBackend.expectGET(`http://localhost:5000/datacards/${id}/plugins`)
-            .respond(plugins);
-    }
+    it('should include datacard maps component', () => {
+        let datacardMapsDirective = $injector.get<angular.IDirective[]>('datacardMapsDirective');
+        expect(datacardMapsDirective.length).toBe(1);
+    });
 
-    function expectPlugins(plugins: Plugin[], elements: angular.IAugmentedJQuery) {
-        expect(elements.length).toBe(plugins.length);
+    it('should include datacard metadata component', () => {
+        let datacardMapsDirective = $injector.get<angular.IDirective[]>('datacardMetadataDirective');
+        expect(datacardMapsDirective.length).toBe(1);
+    })
 
-        for (let i = 0; i < elements.length; i++) {
-            let element = angular.element(elements[i]);
-            expect(element.text()).toContain(plugins[i].name);
-            expect(element.text()).toContain(plugins[i].version);
-        }
-    }
+    it('should include datacard totals component', () => {
+        let datacardTotalsDirective = $injector.get<angular.IDirective[]>('datacardTotalsDirective');
+        expect(datacardTotalsDirective.length).toBe(1);
+    })
 });

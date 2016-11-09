@@ -16,7 +16,7 @@ describe('AppComponent', () => {
         }
     }));
 
-    it('should define app component', () =>{
+    it('should define app component', () => {
         expect(appDirective.controller).toBe(AppComponent);
         expect(appDirective.template).toBe(require('./templates/app.template'))
     });
@@ -35,4 +35,4 @@ describe('AppComponent', () => {
         let uploadElement = angular.element(component[0].querySelectorAll('upload'));
         expect(uploadElement.length).toBe(1);
     });
-})
+});

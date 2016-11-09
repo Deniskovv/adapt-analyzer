@@ -1,23 +1,21 @@
 import * as angular from 'angular';
 
 import { datacardState } from '../datacards/datacard.state';
-import { ConfigService } from '../../services/config.service';
+import { ApiService } from '../../shared';
 
 import './styles/upload.scss';
 export class UploadComponent {
-    static $inject = ['$http', '$state', 'ConfigService']
+    static $inject = ['$state', 'ApiService']
 
     datacardName: string;
 
-    constructor(private $http: angular.IHttpService,
-        private $state: angular.ui.IStateService,
-        private configService: ConfigService) {
+    constructor(private $state: angular.ui.IStateService,
+        private apiService: ApiService) {
 
     }
 
     handleFileChanged(files) {
-        this.configService.getConfig()
-            .then(c => this.$http.post<string>(`${c.api_url}/datacards/upload`, files[0]))
+        this.apiService.post<string>('/datacards/upload', files[0])
             .then(res => this.$state.go(datacardState, { id: res.data }))
             .then(() => this.datacardName = files[0].name);
     }

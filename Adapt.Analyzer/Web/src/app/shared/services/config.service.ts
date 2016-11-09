@@ -1,6 +1,6 @@
 import * as angular from 'angular';
 
-import { Config } from './models/config';
+import { Config } from '../models';
 
 export class ConfigService {
     static $inject = ['$http']

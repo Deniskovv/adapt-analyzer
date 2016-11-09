@@ -5,7 +5,7 @@ import './datacard.component';
 export const datacardState: IState = {
     name: 'datacard',
     url: '/datacards/:id',
-    template: '<datacard></datacard>'
+    template: '<datacard flex layout-fill ></datacard>'
 }
 angular.module('adapt.analyzer')
     .config(['$stateProvider', ($stateProvider: angular.ui.IStateProvider) => {

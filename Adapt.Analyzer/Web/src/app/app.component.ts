@@ -1,7 +1,8 @@
 import * as angular from 'angular';
 import './styles/app.scss';
-import './services/config.service';
+import './shared';
 import './components/upload/upload.component';
+import './components/plugins/plugins.component';
 
 export class AppComponent {
     static $inject = ['$mdSidenav']

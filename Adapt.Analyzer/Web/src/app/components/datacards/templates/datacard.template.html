@@ -1,10 +1,21 @@
-<div layout="row">
-    <md-list class="md-dense">
-        <md-list-item class="md-2-line plugin" ng-repeat="plugin in $ctrl.plugins">
-            <div class="md-list-item-text" layout="column">
-            <h3>{{ plugin.name }}</h3>
-            <h4>{{ plugin.version }}</h4>
-          </div>
-        </md-list-item>
-    </md-list>
+<div layout="column" flex layout-fill>
+    <plugins></plugins>
+
+    <md-tabs layout="column" flex layout-fill md-border-bottom>
+        <md-tab label="Maps">
+            <md-tab-content>
+                <datacard-maps></datacard-maps>
+            </md-tab-content>
+        </md-tab>
+        <md-tab label="Metadata">
+            <md-tab-content >
+                <datacard-metadata></datacard-metadata>
+            </md-tab-content>
+        </md-tab>
+        <md-tab label="Totals">
+            <md-tab-content>
+                <datacard-totals></datacard-totals>
+            </md-tab-content>
+        </md-tab>
+    </md-tabs>
 </div>

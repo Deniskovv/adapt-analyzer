@@ -1,25 +1,9 @@
 import * as angular from 'angular';
 
-import { Plugin } from './models/plugin';
-import { ConfigService } from '../../services/config.service';
-
+import './components/datacard-maps/datacard-maps.component';
+import './components/datacard-metadata/datacard-metadata.component';
+import './components/datacard-totals/datacard-totals.component';
 export class DatacardComponent {
-    static $inject = ['$http', '$state', 'ConfigService'];
-
-    plugins: Plugin[];
-
-    constructor(private $http: angular.IHttpService, 
-        private $state: angular.ui.IStateService,
-        private configService: ConfigService) {
-
-    }
-
-    $onInit() {
-        let id = this.$state.params['id'];
-        this.configService.getConfig()
-            .then(c => this.$http.get<Plugin[]>(`${c.api_url}/datacards/${id}/plugins`))
-            .then(res => this.plugins = res.data);
-    }
 }
 angular.module('adapt.analyzer')
     .component('datacard', {
