@@ -2,6 +2,9 @@ import * as angular from 'angular';
 
 import { Plugin } from '../../shared';
 import { DatacardComponent } from './datacard.component';
+import { datacardMapsState } from './components/datacard-maps/datacard-maps.state';
+import { datacardMetadataState } from './components/datacard-metadata/datacard-metadata.state';
+import { datacardTotalsState } from './components/datacard-totals/datacard-totals.state';
 
 describe('DatacardComponent', () => {
     let $injector: angular.auto.IInjectorService;
@@ -12,6 +15,8 @@ describe('DatacardComponent', () => {
 
     beforeEach(angular.mock.inject((_$injector_, _$httpBackend_, _$state_, _$rootScope_, _$compile_) => {
         $state = _$state_
+        spyOn($state, 'go').and.callFake(() => {});
+
         $injector = _$injector_;
         $httpBackend = _$httpBackend_;
         datacardDirective = _$injector_.get('datacardDirective')[0];
@@ -47,18 +52,41 @@ describe('DatacardComponent', () => {
         expect(tabElement.attr('label')).toBe('Totals');
     });
 
-    it('should include datacard maps component', () => {
-        let datacardMapsDirective = $injector.get<angular.IDirective[]>('datacardMapsDirective');
-        expect(datacardMapsDirective.length).toBe(1);
+    it('should go to maps', () => {
+        let component = createComponent();
+        angular.element(component.find('md-tab-item')[1]).triggerHandler('click');
+        angular.element(component.find('md-tab-item')[0]).triggerHandler('click');
+
+        expect($state.go).toHaveBeenCalledWith(datacardMapsState);
     });
 
-    it('should include datacard metadata component', () => {
-        let datacardMapsDirective = $injector.get<angular.IDirective[]>('datacardMetadataDirective');
-        expect(datacardMapsDirective.length).toBe(1);
-    })
+    it('should go to metadata', () => {
+        let component = createComponent();
+        angular.element(component.find('md-tab-item')[1]).triggerHandler('click');
 
-    it('should include datacard totals component', () => {
-        let datacardTotalsDirective = $injector.get<angular.IDirective[]>('datacardTotalsDirective');
-        expect(datacardTotalsDirective.length).toBe(1);
+        expect($state.go).toHaveBeenCalledWith(datacardMetadataState);
+    });
+
+    it('should go to totals', () => {
+        let component = createComponent();
+        angular.element(component.find('md-tab-item')[2]).triggerHandler('click');
+
+        expect($state.go).toHaveBeenCalledWith(datacardTotalsState);
+    });
+
+    it('should select totals tab', () => {
+        spyOn($state, 'includes').and.callFake(name => name === datacardTotalsState.name);
+
+        let component = createComponent();
+        expect($state.includes).toHaveBeenCalledWith(datacardTotalsState.name);
+        expect(component.isolateScope()['$ctrl'].selectedTab).toBe(2);
+    });
+
+    it('should select metadata tab', () => {
+        spyOn($state, 'includes').and.callFake(name => name === datacardMetadataState.name);
+
+        let component = createComponent();
+        expect($state.includes).toHaveBeenCalledWith(datacardMetadataState.name);
+        expect(component.isolateScope()['$ctrl'].selectedTab).toBe(1);
     })
 });

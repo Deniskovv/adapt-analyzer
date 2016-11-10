@@ -1,21 +1,15 @@
 <div layout="column" flex layout-fill>
     <plugins></plugins>
 
-    <md-tabs layout="column" flex layout-fill md-border-bottom>
-        <md-tab label="Maps">
-            <md-tab-content>
-                <datacard-maps></datacard-maps>
-            </md-tab-content>
+    <md-tabs md-dynamic-height md-border-bottom md-selected="$ctrl.selectedTab">
+        <md-tab label="Maps" md-on-select="$ctrl.goToMaps()">
         </md-tab>
-        <md-tab label="Metadata">
-            <md-tab-content >
-                <datacard-metadata></datacard-metadata>
-            </md-tab-content>
+        <md-tab label="Metadata" md-on-select="$ctrl.goToMetadata()">
         </md-tab>
-        <md-tab label="Totals">
-            <md-tab-content>
-                <datacard-totals></datacard-totals>
-            </md-tab-content>
+        <md-tab label="Totals" md-on-select="$ctrl.goToTotals()">
         </md-tab>
     </md-tabs>
+
+    <div ui-view flex layout="column">
+    </div>
 </div>
