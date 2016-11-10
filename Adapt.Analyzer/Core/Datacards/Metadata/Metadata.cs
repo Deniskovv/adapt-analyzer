@@ -6,7 +6,7 @@ namespace Adapt.Analyzer.Core.Datacards.Metadata
 {
     public class Metadata
     {
-        public ApplicationDataModel[] DataModels { get; private set; }
+        public ApplicationDataModel[] DataModels { get; }
 
         public Metadata(IEnumerable<ApplicationDataModel> dataModels)
         {

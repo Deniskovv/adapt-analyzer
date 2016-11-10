@@ -61,6 +61,8 @@
     <Compile Include="Datacards\Metadata\DatacardMetadataReader.cs" />
     <Compile Include="Datacards\Metadata\Metadata.cs" />
     <Compile Include="Datacards\Models\Plugin.cs" />
+    <Compile Include="Datacards\PluginFactory.cs" />
+    <Compile Include="Datacards\Plugins\DatacardPluginFinder.cs" />
     <Compile Include="Datacards\Save\DatacardWriter.cs" />
     <Compile Include="General\Config.cs" />
     <Compile Include="General\FileSystem.cs" />

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards.Extract;
 using AgGateway.ADAPT.PluginManager;
+using PluginFactory = Adapt.Analyzer.Core.General.PluginFactory;
 
 namespace Adapt.Analyzer.Core.Datacards.Metadata
 {
@@ -16,7 +17,7 @@ namespace Adapt.Analyzer.Core.Datacards.Metadata
         private readonly IPluginFactory _pluginFactory;
 
         public DatacardMetadataReader()
-            : this(new DatacardExtractor(), new PluginFactory(Directory.GetCurrentDirectory()))
+            : this(new DatacardExtractor(), PluginFactory.Create())
         {
             
         }

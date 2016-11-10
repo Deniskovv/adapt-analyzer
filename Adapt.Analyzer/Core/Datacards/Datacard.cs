@@ -1,10 +1,7 @@
-﻿using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Adapt.Analyzer.Core.Datacards.Extract;
+﻿using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards.Metadata;
 using Adapt.Analyzer.Core.Datacards.Models;
-using AgGateway.ADAPT.PluginManager;
+using Adapt.Analyzer.Core.Datacards.Plugins;
 
 namespace Adapt.Analyzer.Core.Datacards
 {
@@ -16,47 +13,32 @@ namespace Adapt.Analyzer.Core.Datacards
 
     public class Datacard : IDatacard
     {
-        private readonly IPluginFactory _pluginFactory;
-        private readonly IDatacardExtractor _datacardExtractor;
+        private readonly IDatacardPluginFinder _datacardPluginFinder;
         private readonly IDatacardMetadataReader _datacardMetadataReader;
         
         public string Id { get; }
 
         public Datacard(string id)
-            : this(id, new DatacardExtractor(), new PluginFactory(Directory.GetCurrentDirectory()))
+            : this(id, new DatacardPluginFinder(), new DatacardMetadataReader())
         {
             
         }
 
-        public Datacard(string id, IDatacardExtractor datacardExtractor, IPluginFactory pluginFactory)
+        public Datacard(string id, IDatacardPluginFinder datacardPluginFinder, IDatacardMetadataReader datacardMetadataReader)
         {
             Id = id;
-            _pluginFactory = pluginFactory;
-            _datacardExtractor = datacardExtractor;
-            _datacardMetadataReader = new DatacardMetadataReader(datacardExtractor, pluginFactory);
+            _datacardPluginFinder = datacardPluginFinder;
+            _datacardMetadataReader = datacardMetadataReader;
         }
 
         public Task<Plugin[]> GetPlugins()
         {
-            var datacardPath = _datacardExtractor.Extract(Id);
-
-            var plugins = GetSupportedPlugins(datacardPath);
-            return Task.FromResult(plugins);
+            return _datacardPluginFinder.GetPlugins(Id);
         }
 
         public Task<Metadata.Metadata> GetMetadata()
         {
             return _datacardMetadataReader.Read(Id);
-        }
-
-        private Plugin[] GetSupportedPlugins(string datacardPath)
-        {
-            return _pluginFactory.GetSupportedPlugins(datacardPath)
-                .Select(p => new Plugin
-                {
-                    Name = p.Name,
-                    Version = p.Version
-                }).ToArray();
         }
     }
 }

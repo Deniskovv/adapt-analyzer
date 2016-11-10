@@ -3,6 +3,8 @@ using System.IO;
 using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards;
 using Adapt.Analyzer.Core.Datacards.Extract;
+using Adapt.Analyzer.Core.Datacards.Metadata;
+using Adapt.Analyzer.Core.Datacards.Plugins;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using Fakes.AgGateway;
 using Fakes.General;
@@ -32,7 +34,9 @@ namespace Adapt.Analyzer.Core.Test.Datacards
             _pluginFactory = new PluginFactoryFake();
 
             var datacardExtractor = new DatacardExtractor(new DatacardPath(_configFake), _fileSystemFake);
-            _datacard = new Datacard(_id, datacardExtractor, _pluginFactory);
+            var datacardPluginFinder = new DatacardPluginFinder(datacardExtractor, _pluginFactory);
+            var datacardMetadataReader = new DatacardMetadataReader(datacardExtractor, _pluginFactory);
+            _datacard = new Datacard(_id, datacardPluginFinder, datacardMetadataReader);
         }
 
         [Test]
