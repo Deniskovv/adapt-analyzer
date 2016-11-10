@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards;
+using Adapt.Analyzer.Core.Datacards.Metadata;
 using Adapt.Analyzer.Core.Datacards.Models;
 
 namespace Fakes.Datacards
@@ -7,6 +8,7 @@ namespace Fakes.Datacards
     public class DatacardFake : IDatacard
     {
         private Plugin[] _plugins;
+        private Metadata _metadata;
         public string Id { get; }
        
 
@@ -20,9 +22,19 @@ namespace Fakes.Datacards
             return Task.FromResult(_plugins);
         }
 
+        public Task<Metadata> GetMetadata()
+        {
+            return Task.FromResult(_metadata);
+        }
+
         public void SetupPlugins(Plugin[] plugins)
         {
             _plugins = plugins;
+        }
+
+        public void SetupMetadata(Metadata metadata)
+        {
+            _metadata = metadata;
         }
     }
 }

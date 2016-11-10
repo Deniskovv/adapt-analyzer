@@ -9,6 +9,7 @@ namespace Adapt.Analyzer.Core.Datacards
     {
         string Id { get; }
         Task<Plugin[]> GetPlugins();
+        Task<Metadata.Metadata> GetMetadata();
     }
 
     public class Datacard : IDatacard
