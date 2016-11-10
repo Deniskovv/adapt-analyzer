@@ -19,6 +19,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Test", "Adapt.Analyzer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Host", "Adapt.Analyzer\Api.Host\Api.Host.csproj", "{20AA6966-677A-45B4-91FF-7429D906077C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".git", ".git", "{F2FD6122-F58C-437F-BC6D-B5873F301F5F}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
