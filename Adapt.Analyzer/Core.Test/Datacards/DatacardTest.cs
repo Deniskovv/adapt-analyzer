@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards;
 using Adapt.Analyzer.Core.Datacards.Extract;
+using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using Fakes.AgGateway;
 using Fakes.General;
 using NUnit.Framework;
@@ -45,7 +46,19 @@ namespace Adapt.Analyzer.Core.Test.Datacards
             Assert.AreEqual(2, plugins.Length);
         }
 
-        private void AddSupportedPlugin(string name, string version, string datacardPath)
+        [Test]
+        public async Task ShouldGetMetadata()
+        {
+            var plugin = AddSupportedPlugin("something", "3.34", Path.Combine(DataCardsDirectory, _id));
+            plugin.DataModels.Add(new ApplicationDataModel());
+            plugin.DataModels.Add(new ApplicationDataModel());
+            plugin.DataModels.Add(new ApplicationDataModel());
+
+            var metadata = await _datacard.GetMetadata();
+            Assert.AreEqual(3, metadata.DataModels.Length);
+        }
+
+        private PredicatePlugin AddSupportedPlugin(string name, string version, string datacardPath)
         {
             var plugin = new PredicatePlugin((s, p) => s == datacardPath)
             {
@@ -53,6 +66,7 @@ namespace Adapt.Analyzer.Core.Test.Datacards
                 Version = version
             };
             _pluginFactory.Plugins.Add(plugin);
+            return plugin;
         }
     }
 }

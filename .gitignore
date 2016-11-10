@@ -8,6 +8,7 @@ packages/
 obj/
 bin/
 .vs/
+**/*.csproj.user
 
 # WebStorm
 .idea/

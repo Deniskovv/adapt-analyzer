@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards.Extract;
+using Adapt.Analyzer.Core.Datacards.Metadata;
 using Adapt.Analyzer.Core.Datacards.Models;
 using AgGateway.ADAPT.PluginManager;
 
@@ -17,6 +18,7 @@ namespace Adapt.Analyzer.Core.Datacards
     {
         private readonly IPluginFactory _pluginFactory;
         private readonly IDatacardExtractor _datacardExtractor;
+        private readonly IDatacardMetadataReader _datacardMetadataReader;
         
         public string Id { get; }
 
@@ -31,6 +33,7 @@ namespace Adapt.Analyzer.Core.Datacards
             Id = id;
             _pluginFactory = pluginFactory;
             _datacardExtractor = datacardExtractor;
+            _datacardMetadataReader = new DatacardMetadataReader(datacardExtractor, pluginFactory);
         }
 
         public Task<Plugin[]> GetPlugins()
@@ -39,6 +42,11 @@ namespace Adapt.Analyzer.Core.Datacards
 
             var plugins = GetSupportedPlugins(datacardPath);
             return Task.FromResult(plugins);
+        }
+
+        public Task<Metadata.Metadata> GetMetadata()
+        {
+            return _datacardMetadataReader.Read(Id);
         }
 
         private Plugin[] GetSupportedPlugins(string datacardPath)
