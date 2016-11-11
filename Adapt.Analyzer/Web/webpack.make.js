@@ -38,7 +38,7 @@ function getEntry(env) {
 
 function getDevtool(env) {
     if (isTest(env))
-        return 'inline-source-map';
+        return undefined;
 
     if (isProd(env)) 
         return 'cheap-module-source-map';
@@ -55,8 +55,13 @@ function getPlugins(env) {
         })
     ];
 
-    if (isTest(env))
+    if (isTest(env)) {
+        plugins.push(new webpack.SourceMapDevToolPlugin({
+            filename: null,
+            test: /\.(ts|js)($|\?)/i
+        }))
         return plugins;
+    }
 
     plugins.push(new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using Adapt.Analyzer.Core.Datacards;
 
@@ -9,6 +8,12 @@ namespace Adapt.Analyzer.Api.Datacards.Metadata
     public class MetadataController : ApiController
     {
         private readonly IDatacardFactory _datacardFactory;
+
+        public MetadataController()
+            : this(new DatacardFactory())
+        {
+            
+        }
 
         public MetadataController(IDatacardFactory datacardFactory)
         {
