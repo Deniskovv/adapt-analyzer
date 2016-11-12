@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using Newtonsoft.Json.Serialization;
 
-namespace Adapt.Analzyer.Api
+namespace Adapt.Analyzer.Api
 {
     public class HttpConfigFactory
     {

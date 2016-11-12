@@ -2,7 +2,7 @@
 using System.Web.Http;
 using Adapt.Analyzer.Core.Datacards.Save;
 
-namespace Adapt.Analzyer.Api.Datacards.Upload
+namespace Adapt.Analyzer.Api.Datacards.Upload
 {
     [RoutePrefix("datacards/upload")]
     public class UploadController : ApiController

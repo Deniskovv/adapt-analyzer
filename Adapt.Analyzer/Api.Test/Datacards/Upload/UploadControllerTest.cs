@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http.Results;
-using Adapt.Analzyer.Api.Datacards.Upload;
+using Adapt.Analyzer.Api.Datacards.Upload;
 using Fakes.Datacards.Save;
 using NUnit.Framework;
 

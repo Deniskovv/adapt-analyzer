@@ -1,11 +1,14 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards;
 using Adapt.Analyzer.Core.Datacards.Extract;
 using Adapt.Analyzer.Core.Datacards.Metadata;
 using Adapt.Analyzer.Core.Datacards.Plugins;
+using Adapt.Analyzer.Core.Datacards.Totals;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
+using AgGateway.ADAPT.ApplicationDataModel.Common;
+using AgGateway.ADAPT.ApplicationDataModel.LoggedData;
 using Fakes.AgGateway;
 using Fakes.General;
 using NUnit.Framework;
@@ -15,36 +18,37 @@ namespace Adapt.Analyzer.Core.Test.Datacards
     [TestFixture]
     public class DatacardTest
     {
-        private const string DataCardsDirectory = "this is a directory";
         private ConfigFake _configFake;
         private FileSystemFake _fileSystemFake;
         private PluginFactoryFake _pluginFactory;
         private string _id;
         private Datacard _datacard;
+        private DatacardPath _datacardPath;
 
         [SetUp]
         public void Setup()
         {
             _id = Guid.NewGuid().ToString();
 
-            _configFake = new ConfigFake();
-            _configFake.SetSetting("datacards-dir", DataCardsDirectory);
+            _configFake = new ConfigFake {DatacardsDirectory = "this is a directory"};
 
             _fileSystemFake = new FileSystemFake();
             _pluginFactory = new PluginFactoryFake();
 
-            var datacardExtractor = new DatacardExtractor(new DatacardPath(_configFake), _fileSystemFake);
+            _datacardPath = new DatacardPath(_configFake);
+            var datacardExtractor = new DatacardExtractor(_datacardPath, _fileSystemFake);
             var datacardPluginFinder = new DatacardPluginFinder(datacardExtractor, _pluginFactory);
             var datacardMetadataReader = new DatacardMetadataReader(datacardExtractor, _pluginFactory);
-            _datacard = new Datacard(_id, datacardPluginFinder, datacardMetadataReader);
+            var datacardTotalsCalculator = new DatacardTotalsCalculator(datacardExtractor, _pluginFactory, new FieldTotalsCalculator());
+            _datacard = new Datacard(_id, datacardPluginFinder, datacardMetadataReader, datacardTotalsCalculator);
         }
 
         [Test]
         public async Task ShouldGetPluginsForDatacard()
         {
-            AddSupportedPlugin("GodStuff", "3.4.1", Path.Combine(DataCardsDirectory, _id));
-            AddSupportedPlugin("NotWorking", "9.1.3", Path.Combine(DataCardsDirectory, Guid.NewGuid().ToString()));
-            AddSupportedPlugin("BadStuff", "2.5.7", Path.Combine(DataCardsDirectory, _id));
+            _pluginFactory.AddSupportedPlugin("GodStuff");
+            _pluginFactory.AddUnsupportedPlugin("NotWorking");
+            _pluginFactory.AddSupportedPlugin("BadStuff");
 
             var plugins = await _datacard.GetPlugins();
             Assert.AreEqual(2, plugins.Length);
@@ -53,7 +57,7 @@ namespace Adapt.Analyzer.Core.Test.Datacards
         [Test]
         public async Task ShouldGetMetadata()
         {
-            var plugin = AddSupportedPlugin("something", "3.34", Path.Combine(DataCardsDirectory, _id));
+            var plugin = _pluginFactory.AddSupportedPlugin();
             plugin.DataModels.Add(new ApplicationDataModel());
             plugin.DataModels.Add(new ApplicationDataModel());
             plugin.DataModels.Add(new ApplicationDataModel());
@@ -62,15 +66,37 @@ namespace Adapt.Analyzer.Core.Test.Datacards
             Assert.AreEqual(3, metadata.DataModels.Length);
         }
 
-        private PredicatePlugin AddSupportedPlugin(string name, string version, string datacardPath)
+        [Test]
+        public async Task ShouldCalculateTotalsForDatacard()
         {
-            var plugin = new PredicatePlugin((s, p) => s == datacardPath)
+            var plugin = _pluginFactory.AddSupportedPlugin();
+            plugin.DataModels.Add(CreateDataModelWithTotals());
+
+            var totals = await _datacard.CalculateTotals();
+            Assert.AreEqual(1, totals.PluginTotals.Length);
+        }
+
+        private ApplicationDataModel CreateDataModelWithTotals()
+        {
+            return new ApplicationDataModel
             {
-                Name = name,
-                Version = version
+                Documents = new Documents
+                {
+                    LoggedData = new List<LoggedData>
+                    {
+                        new LoggedData
+                        {
+                            OperationData = new List<OperationData>
+                            {
+                                new OperationData
+                                {
+                                    OperationType = OperationTypeEnum.Harvesting
+                                }
+                            }
+                        }
+                    }
+                }
             };
-            _pluginFactory.Plugins.Add(plugin);
-            return plugin;
         }
     }
 }

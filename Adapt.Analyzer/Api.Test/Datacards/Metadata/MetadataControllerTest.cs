@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web.Http.Results;
 using Adapt.Analyzer.Api.Datacards.Metadata;
+using Adapt.Analyzer.Core.Datacards.Metadata;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using Fakes.Datacards;
 using NUnit.Framework;
@@ -26,7 +27,7 @@ namespace Adapt.Analyzer.Api.Test.Datacards.Metadata
         [Test]
         public async Task ShouldGetMetadataForDatacard()
         {
-            var metadata = new Core.Datacards.Metadata.Metadata(new ApplicationDataModel[0]);
+            var metadata = new Core.Datacards.Metadata.Metadata(new PluginDataModel[0]);
             _datacardFake.SetupMetadata(metadata);
 
             var result = (OkNegotiatedContentResult<Core.Datacards.Metadata.Metadata>)await _metadataController.GetMetadata(_datacardFake.Id);

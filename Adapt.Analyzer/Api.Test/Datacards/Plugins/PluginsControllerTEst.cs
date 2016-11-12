@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web.Http.Results;
+using Adapt.Analyzer.Api.Datacards.Plugins;
 using Adapt.Analyzer.Core.Datacards.Models;
-using Adapt.Analzyer.Api.Datacards.Plugins;
 using Fakes.Datacards;
 using NUnit.Framework;
 

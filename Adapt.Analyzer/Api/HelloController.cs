@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace Adapt.Analzyer.Api
+namespace Adapt.Analyzer.Api
 {
     [RoutePrefix("hello")]
     public class HelloController : ApiController

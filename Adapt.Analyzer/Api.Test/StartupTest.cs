@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Adapt.Analzyer.Api;
 using Microsoft.Owin.Testing;
 using NUnit.Framework;
 

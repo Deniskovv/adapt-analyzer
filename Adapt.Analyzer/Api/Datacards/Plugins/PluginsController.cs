@@ -2,7 +2,7 @@
 using System.Web.Http;
 using Adapt.Analyzer.Core.Datacards;
 
-namespace Adapt.Analzyer.Api.Datacards.Plugins
+namespace Adapt.Analyzer.Api.Datacards.Plugins
 {
     [RoutePrefix("datacards")]
     public class PluginsController : ApiController

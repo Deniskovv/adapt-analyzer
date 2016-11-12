@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AgGateway.ADAPT.ApplicationDataModel.ADM;
 
 namespace Adapt.Analyzer.Core.Datacards.Metadata
 {
     public class Metadata
     {
-        public ApplicationDataModel[] DataModels { get; }
+        public PluginDataModel[] DataModels { get; }
 
-        public Metadata(IEnumerable<ApplicationDataModel> dataModels)
+        public Metadata(IEnumerable<PluginDataModel> dataModels)
         {
             DataModels = dataModels.ToArray();
         }

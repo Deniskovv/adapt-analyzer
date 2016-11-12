@@ -1,5 +1,4 @@
-﻿using Adapt.Analzyer.Api;
-using Newtonsoft.Json.Serialization;
+﻿using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 
 namespace Adapt.Analyzer.Api.Test

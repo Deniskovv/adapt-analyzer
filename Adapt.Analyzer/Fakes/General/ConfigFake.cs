@@ -5,6 +5,11 @@ namespace Fakes.General
 {
     public class ConfigFake : IConfig
     {
+        public string DatacardsDirectory
+        {
+            get { return _settings["datacards-dir"]; }
+            set { _settings["datacards-dir"] = value; }
+        }
         private readonly Dictionary<string, string> _settings;
 
         public ConfigFake()

@@ -28,5 +28,26 @@ namespace Fakes.AgGateway
         {
             return Plugins.Where(p => p.IsDataCardSupported(dataPath, properties)).ToList();
         }
+
+        public PredicatePlugin AddUnsupportedPlugin(string name = "nope", string version = "jpg")
+        {
+            return AddPlugin(name, version, false);
+        }
+
+        public PredicatePlugin AddSupportedPlugin(string name = "what", string version = "nope")
+        {
+            return AddPlugin(name, version, true);
+        }
+
+        private PredicatePlugin AddPlugin(string name, string version, bool isSupported)
+        {
+            var plugin = new PredicatePlugin((s, p) => isSupported)
+            {
+                Name = name,
+                Version = version
+            };
+            Plugins.Add(plugin);
+            return plugin;
+        }
     }
 }

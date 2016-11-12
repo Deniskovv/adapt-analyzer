@@ -1,5 +1,4 @@
 ﻿using System;
-using Adapt.Analzyer.Api;
 using Microsoft.Owin.Hosting;
 
 namespace Adapt.Analyzer.Api.Host

@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards.Extract;
+using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using AgGateway.ADAPT.PluginManager;
 using PluginFactory = Adapt.Analyzer.Core.General.PluginFactory;
 
@@ -31,10 +34,16 @@ namespace Adapt.Analyzer.Core.Datacards.Metadata
         public Task<Metadata> Read(string id)
         {
             var datacardPath = _datacardExtractor.Extract(id);
-            var plugins = _pluginFactory.GetSupportedPlugins(datacardPath)[0];
-            var dataModels = plugins.Import(datacardPath);
+            var plugins = _pluginFactory.GetSupportedPlugins(datacardPath);
+            var dataModels = plugins.SelectMany(p => Import(p, datacardPath));
             var metadata = new Metadata(dataModels);
             return Task.FromResult(metadata);
+        }
+
+        private IEnumerable<PluginDataModel> Import(IPlugin plugin, string datacardPath)
+        {
+            return plugin.Import(datacardPath)
+                .Select(d => new PluginDataModel(plugin.Name, plugin.Version, d));
         }
     }
 }

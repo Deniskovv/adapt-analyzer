@@ -1,13 +1,14 @@
 ﻿using System.IO;
+using Adapt.Analyzer.Api;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 using Owin;
 
-[assembly: OwinStartup(typeof(Adapt.Analzyer.Api.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 
-namespace Adapt.Analzyer.Api
+namespace Adapt.Analyzer.Api
 {
     public class Startup
     {
