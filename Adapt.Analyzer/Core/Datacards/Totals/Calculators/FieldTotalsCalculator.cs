@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Adapt.Analyzer.Core.Datacards.Totals.Models;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using AgGateway.ADAPT.ApplicationDataModel.Logistics;
 
-namespace Adapt.Analyzer.Core.Datacards.Totals
+namespace Adapt.Analyzer.Core.Datacards.Totals.Calculators
 {
     public interface IFieldTotalsCalculator
     {

@@ -6,6 +6,7 @@ using Adapt.Analyzer.Core.Datacards.Extract;
 using Adapt.Analyzer.Core.Datacards.Metadata;
 using Adapt.Analyzer.Core.Datacards.Plugins;
 using Adapt.Analyzer.Core.Datacards.Totals;
+using Adapt.Analyzer.Core.Datacards.Totals.Calculators;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using AgGateway.ADAPT.ApplicationDataModel.Common;
 using AgGateway.ADAPT.ApplicationDataModel.LoggedData;

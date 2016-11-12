@@ -1,6 +1,6 @@
 ﻿using AgGateway.ADAPT.ApplicationDataModel.Common;
 
-namespace Adapt.Analyzer.Core.Datacards.Totals
+namespace Adapt.Analyzer.Core.Datacards.Totals.Models
 {
     public class OperationTotals
     {

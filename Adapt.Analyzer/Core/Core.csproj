@@ -63,15 +63,19 @@
     <Compile Include="Datacards\Metadata\Metadata.cs" />
     <Compile Include="Datacards\Metadata\PluginDataModel.cs" />
     <Compile Include="Datacards\Models\Plugin.cs" />
-    <Compile Include="Datacards\Totals\DatacardTotals.cs" />
-    <Compile Include="Datacards\Totals\DatacardTotalsCalculator.cs" />
-    <Compile Include="Datacards\Totals\FieldTotals.cs" />
-    <Compile Include="Datacards\Totals\FieldTotalsCalculator.cs" />
-    <Compile Include="Datacards\Totals\OperationTotals.cs" />
-    <Compile Include="Datacards\Totals\OperationTotalsCalculator.cs" />
-    <Compile Include="Datacards\Totals\PluginTotals.cs" />
-    <Compile Include="Datacards\Totals\RepresentationTotal.cs" />
-    <Compile Include="Datacards\Totals\RepresentationTotalsCalculator.cs" />
+    <Compile Include="Datacards\Totals\Calculators\Strategies\AggregateStrategyFactory.cs" />
+    <Compile Include="Datacards\Totals\Calculators\Strategies\AverageAggregateStrategy.cs" />
+    <Compile Include="Datacards\Totals\Calculators\Strategies\IAggregateStrategy.cs" />
+    <Compile Include="Datacards\Totals\Calculators\Strategies\SumAggregateStrategy.cs" />
+    <Compile Include="Datacards\Totals\Models\DatacardTotals.cs" />
+    <Compile Include="Datacards\Totals\Calculators\DatacardTotalsCalculator.cs" />
+    <Compile Include="Datacards\Totals\Models\FieldTotals.cs" />
+    <Compile Include="Datacards\Totals\Calculators\FieldTotalsCalculator.cs" />
+    <Compile Include="Datacards\Totals\Models\OperationTotals.cs" />
+    <Compile Include="Datacards\Totals\Calculators\OperationTotalsCalculator.cs" />
+    <Compile Include="Datacards\Totals\Models\PluginTotals.cs" />
+    <Compile Include="Datacards\Totals\Models\RepresentationTotal.cs" />
+    <Compile Include="Datacards\Totals\Calculators\RepresentationTotalsCalculator.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="General\PluginFactory.cs" />
     <Compile Include="Datacards\Plugins\DatacardPluginFinder.cs" />
@@ -80,6 +84,7 @@
     <Compile Include="General\FileSystem.cs" />
     <Compile Include="OperationDataExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpatialRecordExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\RepresentationSystem.xml">

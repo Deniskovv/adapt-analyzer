@@ -3,6 +3,8 @@ using Adapt.Analyzer.Core.Datacards.Metadata;
 using Adapt.Analyzer.Core.Datacards.Models;
 using Adapt.Analyzer.Core.Datacards.Plugins;
 using Adapt.Analyzer.Core.Datacards.Totals;
+using Adapt.Analyzer.Core.Datacards.Totals.Calculators;
+using Adapt.Analyzer.Core.Datacards.Totals.Models;
 
 namespace Adapt.Analyzer.Core.Datacards
 {

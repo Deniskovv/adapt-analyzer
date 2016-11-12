@@ -18,5 +18,12 @@ namespace Adapt.Analyzer.Core
             return operationData.GetWorkingData()
                 .OfType<NumericWorkingData>();
         }
+
+        public static IEnumerable<SpatialRecord> GetSpatialRecordsSafely(this OperationData operationData)
+        {
+            return operationData.GetSpatialRecords == null
+                ? Enumerable.Empty<SpatialRecord>()
+                : operationData.GetSpatialRecords();
+        }
     }
 }

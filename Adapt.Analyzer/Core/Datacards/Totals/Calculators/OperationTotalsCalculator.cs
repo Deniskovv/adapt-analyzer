@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Adapt.Analyzer.Core.Datacards.Totals.Models;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
-using AgGateway.ADAPT.ApplicationDataModel.Common;
 using AgGateway.ADAPT.ApplicationDataModel.LoggedData;
 using AgGateway.ADAPT.ApplicationDataModel.Logistics;
 
-namespace Adapt.Analyzer.Core.Datacards.Totals
+namespace Adapt.Analyzer.Core.Datacards.Totals.Calculators
 {
     public interface IOperationTotalsCalculator
     {
@@ -36,7 +36,9 @@ namespace Adapt.Analyzer.Core.Datacards.Totals
 
         private async Task<OperationTotals> Calculate(OperationData operationData)
         {
-            var representationTotals = await _representationTotalsCalculator.Calculate(operationData);
+            var numericWorkingData = operationData.GetNumericWorkingData().ToList();
+            var spatialRecords = operationData.GetSpatialRecordsSafely().ToList();
+            var representationTotals = await _representationTotalsCalculator.Calculate(numericWorkingData, spatialRecords);
             return new OperationTotals(operationData.OperationType, representationTotals);
         }
     }

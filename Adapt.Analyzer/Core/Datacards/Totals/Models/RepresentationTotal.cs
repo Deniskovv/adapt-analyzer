@@ -1,4 +1,4 @@
-﻿namespace Adapt.Analyzer.Core.Datacards.Totals
+﻿namespace Adapt.Analyzer.Core.Datacards.Totals.Models
 {
     public class RepresentationTotal
     {
@@ -11,6 +11,11 @@
             Representation = representation;
             UnitOfMeasure = unitOfMeasure;
             Total = total;
+        }
+
+        public RepresentationTotal Add(double value)
+        {
+            return new RepresentationTotal(Representation, UnitOfMeasure, Total + value);
         }
     }
 }

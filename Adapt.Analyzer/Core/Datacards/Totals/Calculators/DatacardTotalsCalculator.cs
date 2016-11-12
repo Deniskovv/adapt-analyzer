@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards.Extract;
+using Adapt.Analyzer.Core.Datacards.Totals.Models;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using AgGateway.ADAPT.PluginManager;
 using PluginFactory = Adapt.Analyzer.Core.General.PluginFactory;
 
-namespace Adapt.Analyzer.Core.Datacards.Totals
+namespace Adapt.Analyzer.Core.Datacards.Totals.Calculators
 {
     public interface IDatacardTotalsCalculator
     {

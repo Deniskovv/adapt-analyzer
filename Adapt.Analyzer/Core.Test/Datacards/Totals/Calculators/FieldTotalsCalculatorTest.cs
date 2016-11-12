@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Adapt.Analyzer.Core.Datacards.Totals;
+using Adapt.Analyzer.Core.Datacards.Totals.Calculators;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using AgGateway.ADAPT.ApplicationDataModel.LoggedData;
 using AgGateway.ADAPT.ApplicationDataModel.Logistics;
 using Fakes.AgGateway;
 using NUnit.Framework;
 
-namespace Adapt.Analyzer.Core.Test.Datacards.Totals
+namespace Adapt.Analyzer.Core.Test.Datacards.Totals.Calculators
 {
     [TestFixture]
     public class FieldTotalsCalculatorTest

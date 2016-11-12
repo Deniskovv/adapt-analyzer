@@ -1,4 +1,4 @@
-﻿namespace Adapt.Analyzer.Core.Datacards.Totals
+﻿namespace Adapt.Analyzer.Core.Datacards.Totals.Models
 {
     public class DatacardTotals
     {

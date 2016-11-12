@@ -63,9 +63,10 @@
     <Compile Include="Datacards\Extract\DatacardExtractorTest.cs" />
     <Compile Include="Datacards\Metadata\DatacardMetadataReaderTest.cs" />
     <Compile Include="Datacards\Save\DatacardWriterTest.cs" />
-    <Compile Include="Datacards\Totals\DatacardTotalsCalculatorTest.cs" />
-    <Compile Include="Datacards\Totals\FieldTotalsCalculatorTest.cs" />
-    <Compile Include="Datacards\Totals\OperationTotalsCalculatorTest.cs" />
+    <Compile Include="Datacards\Totals\Calculators\DatacardTotalsCalculatorTest.cs" />
+    <Compile Include="Datacards\Totals\Calculators\FieldTotalsCalculatorTest.cs" />
+    <Compile Include="Datacards\Totals\Calculators\OperationTotalsCalculatorTest.cs" />
+    <Compile Include="Datacards\Totals\Calculators\RepresentationTotalsCalculatorTest.cs" />
     <Compile Include="General\ConfigTest.cs" />
     <Compile Include="General\FileSystemTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
