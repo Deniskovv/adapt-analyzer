@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Datacards\Metadata\MetadataControllerTest.cs" />
     <Compile Include="Datacards\Plugins\PluginsControllerTest.cs" />
+    <Compile Include="Datacards\Totals\TotalsControllerTest.cs" />
     <Compile Include="Datacards\Upload\UploadControllerTest.cs" />
     <Compile Include="HttpConfigFactoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -2,6 +2,7 @@
 using Adapt.Analyzer.Core.Datacards;
 using Adapt.Analyzer.Core.Datacards.Metadata;
 using Adapt.Analyzer.Core.Datacards.Models;
+using Adapt.Analyzer.Core.Datacards.Totals.Models;
 
 namespace Fakes.Datacards
 {
@@ -9,6 +10,7 @@ namespace Fakes.Datacards
     {
         private Plugin[] _plugins;
         private Metadata _metadata;
+        private DatacardTotals _datacardTotals;
         public string Id { get; }
        
 
@@ -27,6 +29,11 @@ namespace Fakes.Datacards
             return Task.FromResult(_metadata);
         }
 
+        public Task<DatacardTotals> CalculateTotals()
+        {
+            return Task.FromResult(_datacardTotals);
+        }
+
         public void SetupPlugins(Plugin[] plugins)
         {
             _plugins = plugins;
@@ -35,6 +42,11 @@ namespace Fakes.Datacards
         public void SetupMetadata(Metadata metadata)
         {
             _metadata = metadata;
+        }
+
+        public void SetupTotals(DatacardTotals totals)
+        {
+            _datacardTotals = totals;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Adapt.Analyzer.Core.Datacards
         string Id { get; }
         Task<Plugin[]> GetPlugins();
         Task<Metadata.Metadata> GetMetadata();
+        Task<DatacardTotals> CalculateTotals();
     }
 
     public class Datacard : IDatacard

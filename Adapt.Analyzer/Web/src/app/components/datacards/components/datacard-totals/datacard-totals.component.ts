@@ -2,13 +2,14 @@ import * as angular from 'angular';
 
 import { 
     ApiService,
-    Totals 
+    DatacardTotal 
 } from '../../../../shared';
 
+import './components/datacard-total/datacard-total.component';
 export class DatacardTotalsComponent {
     static $inject = ['$state', 'ApiService'];
 
-    totals: Totals;
+    totals: DatacardTotal;
 
     constructor(private $state: angular.ui.IStateService,
         private apiService: ApiService) {
@@ -17,7 +18,7 @@ export class DatacardTotalsComponent {
 
     $onInit() {
         let datacardId = this.$state.params['id'];
-        this.apiService.get<Totals>(`/datacards/${datacardId}/totals`)
+        this.apiService.get<DatacardTotal>(`/datacards/${datacardId}/totals`)
             .then(res => this.totals = res.data);
     }
 }

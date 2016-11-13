@@ -1,6 +1,6 @@
-import { Total } from './total';
+import { RepresentationTotal } from './representation-total';
 
 export interface OperationTotal {
     operationType?: string;
-    representationTotals?: Total[];
+    representationTotals?: RepresentationTotal[];
 }

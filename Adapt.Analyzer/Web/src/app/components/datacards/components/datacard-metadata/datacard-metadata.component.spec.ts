@@ -28,12 +28,12 @@ describe('DatacardMetadataComponent', () => {
             .respond(metadata);
 
         let component = createComponent();
-        let jsonFormatter = component.find('json-formatter');
-        
         $httpBackend.flush();
+        $scope.$digest();
 
+        let jsonFormatter = angular.element(component[0].querySelector('.json-formatter-row'));
         expect(jsonFormatter.length).toBe(1);
-        expect(jsonFormatter.attr('json')).toBe('metadata');
+        expect(jsonFormatter.attr('json')).toBe('$ctrl.metadata');
         expect(component.isolateScope()['$ctrl'].metadata).toEqual(metadata);
     });
 

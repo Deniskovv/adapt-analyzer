@@ -125,6 +125,7 @@
   <ItemGroup>
     <Compile Include="Datacards\Metadata\MetadataController.cs" />
     <Compile Include="Datacards\Plugins\PluginsController.cs" />
+    <Compile Include="Datacards\Totals\TotalsController.cs" />
     <Compile Include="Datacards\Upload\UploadController.cs" />
     <Compile Include="HelloController.cs" />
     <Compile Include="HttpConfigFactory.cs" />
