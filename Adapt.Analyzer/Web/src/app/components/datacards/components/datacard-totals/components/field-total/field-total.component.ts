@@ -1,5 +1,6 @@
 import * as angular from 'angular';
 
+import './styles/field-total';
 import '../operation-total/operation-total.component';
 export class FieldTotalComponent {
 

@@ -1,4 +1,12 @@
-<h3>{{ $ctrl.total.pluginName }}</h3>
-<h4>{{ $ctrl.total.pluginVersion }}</h4>
-<field-total total="fieldTotal" ng-repeat="fieldTotal in $ctrl.total.fieldTotals">
-</field-total>
+<section class="md-whiteframe-z1">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h3>Totals for plugin: {{ $ctrl.total.pluginName }}&nbsp;{{ $ctrl.total.pluginVersion }}</h3>
+        </div>
+    </md-toolbar>
+
+    <md-content class="plugin-total-content">
+        <field-total total="fieldTotal" ng-repeat="fieldTotal in $ctrl.total.fieldTotals">
+        </field-total>
+    </md-content>
+</section>

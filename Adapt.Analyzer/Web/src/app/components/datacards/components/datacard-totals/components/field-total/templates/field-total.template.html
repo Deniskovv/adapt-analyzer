@@ -1,3 +1,6 @@
-<h3>{{ $ctrl.total.description }}</h3>
-<operation-total total="operationTotal" ng-repeat="operationTotal in $ctrl.total.operationTotals">
-</operation-total>
+<h3>Totals for field: {{ $ctrl.total.description }}</h3>
+<md-divider></md-divider>
+<md-content class="field-total-content">
+    <operation-total total="operationTotal" ng-repeat="operationTotal in $ctrl.total.operationTotals">
+    </operation-total>
+</md-content>

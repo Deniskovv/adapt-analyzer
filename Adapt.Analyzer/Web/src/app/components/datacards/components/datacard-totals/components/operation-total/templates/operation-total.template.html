@@ -1,3 +1,10 @@
-<h3>{{ $ctrl.total.operationType }}</h3>
-<representation-total total="representationTotal" ng-repeat="representationTotal in $ctrl.total.representationTotals">
-</representation-total>
+<h4>Totals for operation: {{ $ctrl.total.operationType }}</h4>
+<md-divider></md-divider>
+<md-content class="operation-total-content">
+    <md-list class="md-dense">
+        <md-list-item ng-repeat="representationTotal in $ctrl.total.representationTotals">
+            <representation-total total="representationTotal">
+            </representation-total>
+        </md-list-item>
+    </md-list>
+</md-content>

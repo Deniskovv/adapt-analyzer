@@ -1,5 +1,6 @@
 import * as angular from 'angular';
 
+import './styles/plugin-total';
 import '../field-total/field-total.component';
 export class PluginTotalComponent {
 
