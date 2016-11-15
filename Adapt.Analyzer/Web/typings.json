@@ -2,6 +2,6 @@
   "name": "adapt.analyzer.web",
   "dependencies": {},
   "globalDependencies": {
-    "jasmine": "registry:dt/jasmine#2.5.0+20161003201800"
+    "jasmine": "registry:dt/jasmine#2.5.0+20161025102649"
   }
 }
