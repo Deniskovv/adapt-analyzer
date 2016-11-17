@@ -2,6 +2,7 @@ var path = require('path');
 var gulp = require('gulp');
 var rimraf = require('rimraf');
 var spawn = require('child_process').spawn;
+var ts = require('gulp-typescript');
 
 var paths = {
     nuget: path.join('C:', 'ProgramData', 'chocolatey', 'bin', 'nuget.exe'),
@@ -10,7 +11,7 @@ var paths = {
     webdir: path.join('..', 'Web'),
     releasedir: path.join('..', 'bin', 'Release'),
     webdist: path.join('..', 'Web', 'dist'),
-    electronmain: path.join(__dirname, 'main.js'),
+    electronapp: path.join(__dirname, 'app', '**', '*.ts'),
     destination: path.join(__dirname, 'dist')
 };
 
@@ -61,19 +62,25 @@ gulp.task('build-web', ['clean'], function (cb) {
     startProcess(options);
 });
 
-gulp.task('copy-api', ['build-api'], function () {
+gulp.task('build-electron', ['clean'], function(cb) {
+    var project = ts.createProject('./tsconfig.json');
+    var result = gulp.src(paths.electronapp)
+        .pipe(project());
+
+    return result.js.pipe(gulp.dest(paths.destination));
+})
+
+gulp.task('copy-api', ['build'], function () {
     return gulp.src(paths.releasedir + '/**/*')
         .pipe(gulp.dest(paths.destination));
 })
 
-gulp.task('copy-web', ['build-web'], function () {
+gulp.task('copy-web', ['build'], function () {
     return gulp.src(paths.webdist + '/**/*')
         .pipe(gulp.dest(paths.destination));
 });
 
-gulp.task('copy-electron', ['copy-api', 'copy-web'], function () {
-    return gulp.src(paths.electronmain)
-        .pipe(gulp.dest(paths.destination));
-})
 
-gulp.task('default', ['clean', 'nuget-restore', 'build-api', 'build-web', 'copy-api', 'copy-web', 'copy-electron']);
+gulp.task('build', ['clean', 'build-api', 'build-web', 'build-electron']);
+gulp.task('copy', ['build', 'copy-api', 'copy-web'])
+gulp.task('default', ['build', 'copy']);
