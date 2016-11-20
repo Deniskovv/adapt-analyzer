@@ -4,6 +4,7 @@ import { MODULE_NAME } from '../module.constants';
 
 import './welcome.component';
 export const WelcomeState: angular.ui.IState = {
+    name: 'welcome',
     url: '/',
     template: '<welcome></welcome>'
 }
