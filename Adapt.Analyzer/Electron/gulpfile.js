@@ -11,6 +11,8 @@ var paths = {
     webdir: path.join('..', 'Web'),
     releasedir: path.join('..', 'bin', 'Release'),
     webdist: path.join('..', 'Web', 'dist'),
+    packagedir: path.join(__dirname, 'adapt-analyzer-win32-x64'),
+    package_json: path.join(__dirname, 'package.json'),
     electronapp: path.join(__dirname, 'app', '**', '*.ts'),
     destination: path.join(__dirname, 'dist')
 };
@@ -23,9 +25,13 @@ function startProcess(options) {
     });
 }
 
-gulp.task('clean', function(cb) {
+gulp.task('clean-dist', function (cb) {
     rimraf(paths.destination, cb);
-})
+});
+
+gulp.task('clean-package', function (cb) {
+    rimraf(paths.packagedir, cb);
+});
 
 gulp.task('nuget-restore', function (cb) {
     var options = {
@@ -68,19 +74,24 @@ gulp.task('build-electron', ['clean'], function(cb) {
         .pipe(project());
 
     return result.js.pipe(gulp.dest(paths.destination));
-})
+});
 
 gulp.task('copy-api', ['build'], function () {
     return gulp.src(paths.releasedir + '/**/*')
         .pipe(gulp.dest(paths.destination));
-})
+});
 
 gulp.task('copy-web', ['build'], function () {
     return gulp.src(paths.webdist + '/**/*')
         .pipe(gulp.dest(paths.destination));
 });
 
+gulp.task('copy-electron', ['build'], function () {
+    return gulp.src(paths.package_json)
+        .pipe(gulp.dest(paths.destination));
+});
 
+gulp.task('clean', ['clean-dist', 'clean-package']);
 gulp.task('build', ['clean', 'build-api', 'build-web', 'build-electron']);
-gulp.task('copy', ['build', 'copy-api', 'copy-web'])
+gulp.task('copy', ['build', 'copy-api', 'copy-web', 'copy-electron']);
 gulp.task('default', ['build', 'copy']);
