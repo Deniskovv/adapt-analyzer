@@ -6,7 +6,7 @@ import './welcome.component';
 export const WelcomeState: angular.ui.IState = {
     name: 'welcome',
     url: '/welcome',
-    template: '<welcome></welcome>'
+    template: '<welcome flex layout-fill></welcome>'
 }
 
 angular.module(MODULE_NAME)

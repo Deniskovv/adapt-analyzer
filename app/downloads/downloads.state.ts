@@ -5,7 +5,7 @@ import { MODULE_NAME } from '../module.constants';
 export const DownloadsState: angular.ui.IState = {
     name: 'downloads',
     url: '/downloads',
-    template: '<downloads></downloads>'
+    template: '<downloads flex layout-fill></downloads>'
 }
 
 angular.module(MODULE_NAME)
