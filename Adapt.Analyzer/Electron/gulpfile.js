@@ -1,8 +1,11 @@
 var path = require('path');
 var gulp = require('gulp');
+var zip = require('gulp-zip');
+var jasmine = require('gulp-jasmine');
 var rimraf = require('rimraf');
 var spawn = require('child_process').spawn;
 var ts = require('gulp-typescript');
+var package_json = require('./package.json');
 
 var paths = {
     nuget: path.join('C:', 'ProgramData', 'chocolatey', 'bin', 'nuget.exe'),
@@ -91,7 +94,29 @@ gulp.task('copy-electron', ['build'], function () {
         .pipe(gulp.dest(paths.destination));
 });
 
+gulp.task('package-app', ['clean', 'build', 'copy'], function(cb) {
+    var options = {
+        cmd: '"./node_modules/.bin/electron-packager" ./dist adapt-analyzer --platform=win32',
+        callback: cb,
+        args: []
+    };
+    startProcess(options);
+});
+
+gulp.task('test-electron', function () {
+    return gulp.src('./run_tests.js')
+        .pipe(jasmine());
+});
+
+gulp.task('zip-package', ['package-app'], function() {
+    return gulp.src(paths.packagedir)
+        .pipe(zip(`adapt-analyzer-win32-x64-${package_json.version}.zip`))
+        .pipe(gulp.dest('dist'));
+});
+
+
 gulp.task('clean', ['clean-dist', 'clean-package']);
 gulp.task('build', ['clean', 'build-api', 'build-web', 'build-electron']);
 gulp.task('copy', ['build', 'copy-api', 'copy-web', 'copy-electron']);
-gulp.task('default', ['build', 'copy']);
+gulp.task('default', ['clean', 'build', 'copy']);
+gulp.task('package', ['default', 'package-app', 'zip-package'])

@@ -5,12 +5,8 @@
   "main": "main.js",
   "scripts": {
     "postinstall": "typings install",
-    "build": "gulp",
     "start": "cd dist && electron ./main.js",
-    "prestart": "npm run build",
-    "test": "node run_tests.js",
-    "package": "electron-packager ./dist adapt-analyzer --platform=win32",
-    "prepackage": "npm run build"
+    "prestart": "gulp"
   },
   "repository": {
     "type": "git",
@@ -27,7 +23,9 @@
     "@types/node": "^6.0.48",
     "electron-packager": "^8.3.0",
     "gulp": "3.9.1",
+    "gulp-jasmine": "^2.4.2",
     "gulp-typescript": "^3.1.3",
+    "gulp-zip": "^3.2.0",
     "jasmine": "^2.5.2",
     "jasmine-spec-reporter": "^2.7.0",
     "rimraf": "2.5.4",

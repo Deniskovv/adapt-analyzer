@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-run start-time="2016-11-20 06:27:10Z">
+  <command-line><![CDATA[..\..\packages\NUnit.ConsoleRunner.3.5.0\tools\nunit3-console.exe C:\source\adapt-analyzer\Adapt.Analyzer\Api.Test\bin\Debug\Adapt.Analyzer.Api.Test.dll C:\source\adapt-analyzer\Adapt.Analyzer\Api.Test\bin\Release\Adapt.Analyzer.Api.Test.dll C:\source\adapt-analyzer\Adapt.Analyzer\Api.Test\obj\Debug\Adapt.Analyzer.Api.Test.dll C:\source\adapt-analyzer\Adapt.Analyzer\Api.Test\obj\Release\Adapt.Analyzer.Api.Test.dll C:\source\adapt-analyzer\Adapt.Analyzer\Core.Test\bin\Debug\Adapt.Analyzer.Core.Test.dll C:\source\adapt-analyzer\Adapt.Analyzer\Core.Test\bin\Release\Adapt.Analyzer.Core.Test.dll C:\source\adapt-analyzer\Adapt.Analyzer\Core.Test\obj\Release\Adapt.Analyzer.Core.Test.dll C:\source\adapt-analyzer\Adapt.Analyzer\Core.Test\obj\Debug\Adapt.Analyzer.Core.Test.dll]]></command-line>
+</test-run>
