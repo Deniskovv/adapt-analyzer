@@ -1,1 +1,14 @@
-@import '../../../node_modules/angular-material/angular-material.scss'
+@import '../../../node_modules/angular-material/angular-material.scss';
+
+root {
+    .menu {
+        list-style: none;
+        padding: 0;
+        max-width: 100%;
+        overflow-x: hidden;
+
+        li {
+            margin: 0;
+        }
+    }
+}

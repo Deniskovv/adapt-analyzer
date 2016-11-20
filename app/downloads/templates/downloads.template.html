@@ -1,0 +1,24 @@
+<md-content flex>
+    <md-list flex>
+        <md-list-item class="md-2-line">
+            <div class="md-list-item-text" layout="column">
+                <h3>{{ $ctrl.latest.version }}</h3>
+                <md-icon class="md-secondary" ng-click="$ctrl.download($ctrl.latest)">
+                    file download
+                </md-icon>
+            </div>
+        </md-list-item>
+
+        <md-divider></md-divider>
+
+        <md-subheader>
+            Previous Versions
+        </md-subheader>
+        <md-list-item class="md-2-line" ng-repeat="download in $ctrl.previousVersions">
+            <h3>{{ download.version }}</h3>
+            <md-icon class="md-secondary" ng-click="$ctrl.download(download)">
+                file download
+            </md-icon>
+        </md-list-item>
+    </md-list>
+</md-content>

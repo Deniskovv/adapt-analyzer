@@ -2,6 +2,20 @@
     <header layout="row" layout-align="center start">
         <h3>Adapt Analyzer</h3>
     </header>
+    <md-content flex role="navigation" >
+        <ul class="menu">
+            <li>
+                <md-button ng-click="$ctrl.navigate('welcome')">
+                    Welcome
+                </md-button>
+            </li>
+            <li>
+                <md-button ng-click="$ctrl.navigate('downloads')">
+                    Downloads
+                </md-button>
+            </li>
+        </ul>
+    </md-content>
 </md-sidenav>
 
 <div layout="column" role="main" flex>

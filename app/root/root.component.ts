@@ -2,9 +2,14 @@ import { module } from 'angular';
 
 import './styles/root';
 export class RootComponent {
-    static $inject = ['$mdSidenav']
+    static $inject = ['$state', '$mdSidenav']
 
-    constructor(private $mdSidenav: angular.material.ISidenavService) {
+    constructor(private $state: angular.ui.IStateService,
+        private $mdSidenav: angular.material.ISidenavService) {
+    }
+
+    navigate(name: string): void {
+        this.$state.go(name);
     }
 
     toggleSidenav() {
