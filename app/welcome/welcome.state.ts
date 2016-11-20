@@ -12,6 +12,7 @@ export const WelcomeState: angular.ui.IState = {
 angular.module(MODULE_NAME)
     .config([
         '$stateProvider',
+        '$urlRouterProvider',
         ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) => {
             $stateProvider.state(WelcomeState);
             $urlRouterProvider.otherwise(<string>WelcomeState.url);
