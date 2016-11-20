@@ -10,6 +10,7 @@ export class RootComponent {
 
     navigate(name: string): void {
         this.$state.go(name);
+        this.$mdSidenav('left').close();
     }
 
     toggleSidenav() {
