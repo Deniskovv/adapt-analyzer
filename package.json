@@ -5,7 +5,8 @@
   "main": "webpack.make.js",
   "scripts": {
     "postinstall": "typings install",
-    "build": "webpack --config ./webpack.prod.js --progress --colors"
+    "build": "webpack --config ./webpack.prod.js --progress --colors",
+    "watch": "webpack --config ./webpack.prod.js --progress --colors --watch"
   },
   "repository": {
     "type": "git",
