@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using Adapt.Analyzer.Core.Datacards.Save;
+using Adapt.Analyzer.Core.Datacards.Storage.Save;
 using Fakes.General;
 using NUnit.Framework;
 
-namespace Adapt.Analyzer.Core.Test.Datacards.Save
+namespace Adapt.Analyzer.Core.Test.Datacards.Storage.Save
 {
     [TestFixture]
     public class DatacardWriterTest

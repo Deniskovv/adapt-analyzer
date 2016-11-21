@@ -70,11 +70,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Datacards\Boundaries\FieldBoundaryReaderTest.cs" />
     <Compile Include="Datacards\DatacardFactoryTest.cs" />
     <Compile Include="Datacards\DatacardTest.cs" />
-    <Compile Include="Datacards\Extract\DatacardExtractorTest.cs" />
+    <Compile Include="Datacards\Storage\Extract\DatacardExtractorTest.cs" />
     <Compile Include="Datacards\Metadata\DatacardMetadataReaderTest.cs" />
-    <Compile Include="Datacards\Save\DatacardWriterTest.cs" />
+    <Compile Include="Datacards\Storage\Save\DatacardWriterTest.cs" />
     <Compile Include="Datacards\Totals\Calculators\DatacardTotalsCalculatorTest.cs" />
     <Compile Include="Datacards\Totals\Calculators\FieldTotalsCalculatorTest.cs" />
     <Compile Include="Datacards\Totals\Calculators\OperationTotalsCalculatorTest.cs" />
@@ -102,7 +103,6 @@
     <Content Include="Resources\RepresentationSystem.xml" />
     <Content Include="Resources\UnitSystem.xml" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

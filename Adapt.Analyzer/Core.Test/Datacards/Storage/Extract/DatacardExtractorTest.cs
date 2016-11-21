@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
-using Adapt.Analyzer.Core.Datacards;
-using Adapt.Analyzer.Core.Datacards.Extract;
+using Adapt.Analyzer.Core.Datacards.Storage;
+using Adapt.Analyzer.Core.Datacards.Storage.Extract;
 using Fakes.General;
 using NUnit.Framework;
 
-namespace Adapt.Analyzer.Core.Test.Datacards.Extract
+namespace Adapt.Analyzer.Core.Test.Datacards.Storage.Extract
 {
     [TestFixture]
     public class DatacardExtractorTest

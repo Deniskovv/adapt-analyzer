@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Adapt.Analyzer.Core.Datacards;
-using Adapt.Analyzer.Core.Datacards.Extract;
 using Adapt.Analyzer.Core.Datacards.Metadata;
+using Adapt.Analyzer.Core.Datacards.Storage;
+using Adapt.Analyzer.Core.Datacards.Storage.Extract;
+using Adapt.Analyzer.Core.Datacards.Storage.Models;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using Fakes.AgGateway;
 using Fakes.General;
@@ -13,62 +15,59 @@ namespace Adapt.Analyzer.Core.Test.Datacards.Metadata
     [TestFixture]
     public class DatacardMetadataReaderTest
     {
-        private PluginFactoryFake _pluginFactoryFake;
-        private ConfigFake _configFake;
-        private FileSystemFake _fileSystemFake;
         private DatacardMetadataReader _datacardMetadataReader;
-        private DatacardPath _datacardPath;
-        private string _datacardId;
+        private List<StorageDataModel> _dataModels;
 
         [SetUp]
         public void Setup()
         {
-            _datacardId = Guid.NewGuid().ToString();
-            _configFake = new ConfigFake {DatacardsDirectory = "something"};
-            _fileSystemFake = new FileSystemFake();
-
-            _datacardPath = new DatacardPath(_configFake);
-            var datacardExtractor = new DatacardExtractor(_datacardPath, _fileSystemFake);
-
-            _pluginFactoryFake = new PluginFactoryFake();
-            _datacardMetadataReader = new DatacardMetadataReader(datacardExtractor, _pluginFactoryFake);
+            _dataModels = new List<StorageDataModel>();
+            _datacardMetadataReader = new DatacardMetadataReader();
         }
 
         [Test]
         public async Task ShouldGetMetadataForSupprtedPlugin()
         {
-            var plugin = _pluginFactoryFake.AddSupportedPlugin();
-            plugin.DataModels.Add(new ApplicationDataModel());
+            AddStorageModel();
 
-            var metadata = await _datacardMetadataReader.Read(_datacardId);
+            var metadata = await _datacardMetadataReader.Read(_dataModels);
             Assert.AreEqual(1, metadata.DataModels.Length);
         }
 
         [Test]
         public async Task ShouldGetMetadataForAllSupportedPlugins()
         {
-            var firstPlugin = _pluginFactoryFake.AddSupportedPlugin();
-            firstPlugin.DataModels.Add(new ApplicationDataModel());
+            AddStorageModel();
+            AddStorageModel();
+            AddStorageModel();
 
-            var secondPlugin = _pluginFactoryFake.AddSupportedPlugin();
-            secondPlugin.DataModels.Add(new ApplicationDataModel());
-
-            var thirdPlugin = _pluginFactoryFake.AddSupportedPlugin();
-            thirdPlugin.DataModels.Add(new ApplicationDataModel());
-
-            var metadata = await _datacardMetadataReader.Read(_datacardId);
+            var metadata = await _datacardMetadataReader.Read(_dataModels);
             Assert.AreEqual(3, metadata.DataModels.Length);
         }
 
         [Test]
         public async Task ShouldIncludePluginNameAndVersionWithDataModel()
         {
-            var firstPlugin = _pluginFactoryFake.AddSupportedPlugin("supported 1", "342");
-            firstPlugin.DataModels.Add(new ApplicationDataModel());
+            AddStorageModel("supported 1", "342");
 
-            var metadata = await _datacardMetadataReader.Read(_datacardId);
+            var metadata = await _datacardMetadataReader.Read(_dataModels);
             Assert.AreEqual("supported 1", metadata.DataModels[0].PluginName);
             Assert.AreEqual("342", metadata.DataModels[0].PluginVersion);
+        }
+
+        private void AddStorageModel(string pluginName = null, string pluginVersion = null)
+        {
+            var plugin = new PredicatePlugin
+            {
+                Name = pluginName,
+                Version = pluginVersion,
+                DataModels =
+                {
+                    new ApplicationDataModel()
+                }
+            };
+            var storageModel = new StorageDataModel(null, plugin);
+            _dataModels.Add(storageModel);
         }
     }
 }

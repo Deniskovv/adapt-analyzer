@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Adapt.Analyzer.Core.Datacards.Save;
+using Adapt.Analyzer.Core.Datacards.Storage.Save;
 
 namespace Fakes.Datacards.Save
 {

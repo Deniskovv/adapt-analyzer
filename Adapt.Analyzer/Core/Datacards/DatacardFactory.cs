@@ -2,14 +2,14 @@
 {
     public interface IDatacardFactory
     {
-        IDatacard Create(string id);
+        IDatacard Create();
     }
 
     public class DatacardFactory : IDatacardFactory
     {
-        public IDatacard Create(string id)
+        public IDatacard Create()
         {
-            return new Datacard(id);
+            return new Datacard();
         }
     }
 }

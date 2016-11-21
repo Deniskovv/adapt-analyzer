@@ -67,7 +67,7 @@ namespace Adapt.Analyzer.Api.Test.Middleware
         }
 
         [Test]
-        public async Task ShouldLogExceptionForRequest()
+        public void ShouldLogExceptionForRequest()
         {
             _nextFake.Exception = new Exception();
             SetOwinRequest("http://bob.com");

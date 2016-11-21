@@ -24,8 +24,8 @@ namespace Adapt.Analyzer.Api.Datacards.Metadata
         [Route("{datacardId}/metadata")]
         public async Task<IHttpActionResult> GetMetadata(string datacardId)
         {
-            var datacard = _datacardFactory.Create(datacardId);
-            var metadata = await datacard.GetMetadata();
+            var datacard = _datacardFactory.Create();
+            var metadata = await datacard.GetMetadata(datacardId);
             return Ok(metadata);
         }
     }

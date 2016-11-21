@@ -1,51 +1,26 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Adapt.Analyzer.Core.Datacards.Extract;
-using Adapt.Analyzer.Core.Datacards.Models;
-using AgGateway.ADAPT.PluginManager;
-using PluginFactory = Adapt.Analyzer.Core.General.PluginFactory;
+using Adapt.Analyzer.Core.Datacards.Plugins.Models;
+using Adapt.Analyzer.Core.Datacards.Storage.Models;
 
 namespace Adapt.Analyzer.Core.Datacards.Plugins
 {
     public interface IDatacardPluginFinder
     {
-        Task<Plugin[]> GetPlugins(string id);
+        Task<Plugin[]> GetPlugins(IEnumerable<StorageDataModel> dataModels);
     }
 
     public class DatacardPluginFinder : IDatacardPluginFinder
     {
-        private readonly IPluginFactory _pluginFactory;
-        private readonly IDatacardExtractor _datacardExtractor;
-
-        public DatacardPluginFinder()
-            : this(new DatacardExtractor(), PluginFactory.Create())
+        public Task<Plugin[]> GetPlugins(IEnumerable<StorageDataModel> dataModels)
         {
-            
-        }
-
-        public DatacardPluginFinder(IDatacardExtractor datacardExtractor, IPluginFactory pluginFactory)
-        {
-            _datacardExtractor = datacardExtractor;
-            _pluginFactory = pluginFactory;
-        }
-
-
-        public Task<Plugin[]> GetPlugins(string id)
-        {
-            var datacardPath = _datacardExtractor.Extract(id);
-
-            var plugins = GetSupportedPlugins(datacardPath);
+            var plugins = dataModels.Select(d => new Plugin
+            {
+                Name = d.PluginName,
+                Version = d.PluginVersion
+            }).ToArray();
             return Task.FromResult(plugins);
-        }
-
-        private Plugin[] GetSupportedPlugins(string datacardPath)
-        {
-            return _pluginFactory.GetSupportedPlugins(datacardPath)
-                .Select(p => new Plugin
-                {
-                    Name = p.Name,
-                    Version = p.Version
-                }).ToArray();
         }
     }
 }

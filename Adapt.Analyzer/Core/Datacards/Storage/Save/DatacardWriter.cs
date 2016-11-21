@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Adapt.Analyzer.Core.General;
 
-namespace Adapt.Analyzer.Core.Datacards.Save
+namespace Adapt.Analyzer.Core.Datacards.Storage.Save
 {
     public interface IDatacardWriter
     {
@@ -16,7 +16,7 @@ namespace Adapt.Analyzer.Core.Datacards.Save
         private readonly string _datacardsDirectory;
 
         public DatacardWriter()
-            : this(new Config(), new General.FileSystem())
+            : this(new Config(), new FileSystem())
         {
             
         }

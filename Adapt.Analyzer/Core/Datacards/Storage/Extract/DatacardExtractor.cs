@@ -1,7 +1,6 @@
-﻿using System.IO;
-using Adapt.Analyzer.Core.General;
+﻿using Adapt.Analyzer.Core.General;
 
-namespace Adapt.Analyzer.Core.Datacards.Extract
+namespace Adapt.Analyzer.Core.Datacards.Storage.Extract
 {
     public interface IDatacardExtractor
     {

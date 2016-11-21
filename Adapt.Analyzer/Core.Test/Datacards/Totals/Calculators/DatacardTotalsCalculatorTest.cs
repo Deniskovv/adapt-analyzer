@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Adapt.Analyzer.Core.Datacards;
-using Adapt.Analyzer.Core.Datacards.Extract;
+using Adapt.Analyzer.Core.Datacards.Storage.Models;
 using Adapt.Analyzer.Core.Datacards.Totals.Calculators;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using AgGateway.ADAPT.ApplicationDataModel.LoggedData;
 using AgGateway.ADAPT.ApplicationDataModel.Logistics;
 using Fakes.AgGateway;
-using Fakes.General;
 using NUnit.Framework;
 
 namespace Adapt.Analyzer.Core.Test.Datacards.Totals.Calculators
@@ -16,65 +13,66 @@ namespace Adapt.Analyzer.Core.Test.Datacards.Totals.Calculators
     [TestFixture]
     public class DatacardTotalsCalculatorTest
     {
-        private string _datacardId;
-        private PluginFactoryFake _pluginFactoryFake;
-        private FileSystemFake _fileSystemFake;
-        private ConfigFake _configFake;
-        private DatacardPath _datacardPath;
+        private List<StorageDataModel> _dataModels;
         private DatacardTotalsCalculator _datacardTotalsCalculator;
 
         [SetUp]
         public void Setup()
         {
-            _datacardId = Guid.NewGuid().ToString();
-            _configFake = new ConfigFake {DatacardsDirectory = "something"};
-            _fileSystemFake = new FileSystemFake();
-            _datacardPath = new DatacardPath(_configFake);
-
-            var datacardExtractor = new DatacardExtractor(_datacardPath, _fileSystemFake);
-
-            _pluginFactoryFake = new PluginFactoryFake();
-            
-            _datacardTotalsCalculator = new DatacardTotalsCalculator(datacardExtractor, _pluginFactoryFake, new FieldTotalsCalculator());
+            _dataModels = new List<StorageDataModel>();
+            _datacardTotalsCalculator = new DatacardTotalsCalculator(new FieldTotalsCalculator());
         }
 
         [Test]
         public async Task ShouldCalculateTotalsForEachSupportedPlugin()
         {
-            _pluginFactoryFake.AddSupportedPlugin("One", "3.4");
-            _pluginFactoryFake.AddSupportedPlugin("Two", "3.3");
-            _pluginFactoryFake.AddUnsupportedPlugin("Three", "1.2");
+            AddDataModel("One", "3.4");
+            AddDataModel("Two", "3.3");
 
-            var totals = await _datacardTotalsCalculator.Calculate(_datacardId);
+            var totals = await _datacardTotalsCalculator.Calculate(_dataModels);
             Assert.AreEqual(2, totals.PluginTotals.Length);
         }
 
         [Test]
         public async Task ShouldGetPluginNameForEachSupportedPlugin()
         {
-            _pluginFactoryFake.AddSupportedPlugin("One", "3.4");
+            AddDataModel("One", "3.4");
 
-            var totals = await _datacardTotalsCalculator.Calculate(_datacardId);
+            var totals = await _datacardTotalsCalculator.Calculate(_dataModels);
             Assert.AreEqual("One", totals.PluginTotals[0].PluginName);
         }
 
         [Test]
         public async Task ShouldGetPluginVersionForEachSupportedPlugin()
         {
-            _pluginFactoryFake.AddSupportedPlugin("Three", "3.5.7.1");
+            AddDataModel("Three", "3.5.7.1");
 
-            var totals = await _datacardTotalsCalculator.Calculate(_datacardId);
+            var totals = await _datacardTotalsCalculator.Calculate(_dataModels);
             Assert.AreEqual("3.5.7.1", totals.PluginTotals[0].PluginVersion);
         }
 
         [Test]
         public async Task ShouldGetTotalsForFieldsInPlugin()
         {
-            var plugin = _pluginFactoryFake.AddSupportedPlugin();
-            plugin.DataModels.Add(CreateDataModelWithFields());
+            AddDataModel(dataModel: CreateDataModelWithFields());
 
-            var totals = await _datacardTotalsCalculator.Calculate(_datacardId);
+            var totals = await _datacardTotalsCalculator.Calculate(_dataModels);
             Assert.AreEqual(1, totals.PluginTotals[0].FieldTotals.Length);
+        }
+
+        private void AddDataModel(string pluginName = null, string pluginVersion = null, ApplicationDataModel dataModel = null)
+        {
+            var plugin = new PredicatePlugin
+            {
+                Name = pluginName,
+                Version = pluginVersion,
+                DataModels =
+                {
+                    dataModel ?? new ApplicationDataModel()
+                }
+            };
+            var storageModel = new StorageDataModel(null, plugin);
+            _dataModels.Add(storageModel);
         }
 
         private ApplicationDataModel CreateDataModelWithFields()

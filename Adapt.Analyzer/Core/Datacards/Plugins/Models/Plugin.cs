@@ -1,4 +1,4 @@
-﻿namespace Adapt.Analyzer.Core.Datacards.Models
+﻿namespace Adapt.Analyzer.Core.Datacards.Plugins.Models
 {
     public class Plugin
     {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Adapt.Analyzer.Core.Datacards.Storage.Models;
 using Adapt.Analyzer.Core.Datacards.Totals.Models;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using AgGateway.ADAPT.ApplicationDataModel.Logistics;
@@ -8,7 +9,7 @@ namespace Adapt.Analyzer.Core.Datacards.Totals.Calculators
 {
     public interface IFieldTotalsCalculator
     {
-        Task<FieldTotals[]> Calculate(IPlugin plugin, string datacardPath);
+        Task<FieldTotals[]> Calculate(IEnumerable<ApplicationDataModel> dataModels);
     }
 
     public class FieldTotalsCalculator : IFieldTotalsCalculator
@@ -26,9 +27,8 @@ namespace Adapt.Analyzer.Core.Datacards.Totals.Calculators
             _operationTotalsCalculator = operationTotalsCalculator;
         }
 
-        public async Task<FieldTotals[]> Calculate(IPlugin plugin, string datacardPath)
+        public async Task<FieldTotals[]> Calculate(IEnumerable<ApplicationDataModel> dataModels)
         {
-            var dataModels = plugin.Import(datacardPath);
             return await CalculateFieldTotals(dataModels);
         }
 

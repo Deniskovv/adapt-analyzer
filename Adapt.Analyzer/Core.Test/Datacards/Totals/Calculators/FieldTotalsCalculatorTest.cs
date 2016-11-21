@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards.Totals.Calculators;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using AgGateway.ADAPT.ApplicationDataModel.LoggedData;
 using AgGateway.ADAPT.ApplicationDataModel.Logistics;
-using Fakes.AgGateway;
 using NUnit.Framework;
 
 namespace Adapt.Analyzer.Core.Test.Datacards.Totals.Calculators
@@ -13,48 +11,45 @@ namespace Adapt.Analyzer.Core.Test.Datacards.Totals.Calculators
     [TestFixture]
     public class FieldTotalsCalculatorTest
     {
-        private string _datacardPath;
-        private PredicatePlugin _plugin;
+        private List<ApplicationDataModel> _dataModels;
         private FieldTotalsCalculator _fieldTotalsCalculator;
 
         [SetUp]
         public void Setup()
         {
-            _datacardPath = Guid.NewGuid().ToString();
-            _plugin = new PredicatePlugin((s, v) => true);
-
+            _dataModels = new List<ApplicationDataModel>();
             _fieldTotalsCalculator = new FieldTotalsCalculator();
         }
 
         [Test]
         public async Task ShouldGetTotalsForEachFieldInPluginWithLoggedData()
         {
-            _plugin.DataModels.Add(CreateDataModelWithFields());
+            _dataModels.Add(CreateDataModelWithFields());
 
 
-            var totals = await _fieldTotalsCalculator.Calculate(_plugin, _datacardPath);
+            var totals = await _fieldTotalsCalculator.Calculate(_dataModels);
             Assert.AreEqual(2, totals.Length);
         }
 
         [Test]
         public async Task ShouldGetFieldDescriptionForField()
         {
-            _plugin.DataModels.Add(CreateDataModelWithFields());
+            _dataModels.Add(CreateDataModelWithFields());
 
-            var totals = await _fieldTotalsCalculator.Calculate(_plugin, _datacardPath);
+            var totals = await _fieldTotalsCalculator.Calculate(_dataModels);
             Assert.AreEqual("Bob", totals[0].Description);
         }
 
         [Test]
         public async Task ShouldGetOperationTotalForField()
         {
-            _plugin.DataModels.Add(CreateDataModelWithFields());
+            _dataModels.Add(CreateDataModelWithFields());
 
-            var totals = await _fieldTotalsCalculator.Calculate(_plugin, _datacardPath);
+            var totals = await _fieldTotalsCalculator.Calculate(_dataModels);
             Assert.AreEqual(1, totals[0].OperationTotals.Length);
         }
 
-        private ApplicationDataModel CreateDataModelWithFields()
+        private static ApplicationDataModel CreateDataModelWithFields()
         {
             return new ApplicationDataModel
             {

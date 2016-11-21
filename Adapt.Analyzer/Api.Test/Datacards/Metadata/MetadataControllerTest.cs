@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using System.Web.Http.Results;
 using Adapt.Analyzer.Api.Datacards.Metadata;
 using Adapt.Analyzer.Core.Datacards.Metadata;
-using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using Fakes.Datacards;
 using NUnit.Framework;
 
@@ -15,11 +14,13 @@ namespace Adapt.Analyzer.Api.Test.Datacards.Metadata
         private MetadataController _metadataController;
         private DatacardFake _datacardFake;
         private DatacardFactoryFake _datacardFactoryFake;
+        private string _datacardId;
 
         [SetUp]
         public void Setup()
         {
-            _datacardFake = new DatacardFake(Guid.NewGuid().ToString());
+            _datacardId = Guid.NewGuid().ToString();
+            _datacardFake = new DatacardFake();
             _datacardFactoryFake = new DatacardFactoryFake(_datacardFake);
             _metadataController = new MetadataController(_datacardFactoryFake);
         }
@@ -30,7 +31,7 @@ namespace Adapt.Analyzer.Api.Test.Datacards.Metadata
             var metadata = new Core.Datacards.Metadata.Metadata(new PluginDataModel[0]);
             _datacardFake.SetupMetadata(metadata);
 
-            var result = (OkNegotiatedContentResult<Core.Datacards.Metadata.Metadata>)await _metadataController.GetMetadata(_datacardFake.Id);
+            var result = (OkNegotiatedContentResult<Core.Datacards.Metadata.Metadata>)await _metadataController.GetMetadata(_datacardId);
             Assert.AreSame(metadata, result.Content);
         }
     }

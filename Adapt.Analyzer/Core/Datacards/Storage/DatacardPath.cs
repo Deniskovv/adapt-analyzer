@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Adapt.Analyzer.Core.General;
 
-namespace Adapt.Analyzer.Core.Datacards
+namespace Adapt.Analyzer.Core.Datacards.Storage
 {
     public interface IDatacardPath
     {

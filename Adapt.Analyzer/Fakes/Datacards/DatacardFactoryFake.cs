@@ -11,7 +11,7 @@ namespace Fakes.Datacards
             _datacardFake = datacardFake;
         }
 
-        public IDatacard Create(string id)
+        public IDatacard Create()
         {
             return _datacardFake;
         }

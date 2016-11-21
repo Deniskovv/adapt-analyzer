@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards;
+using Adapt.Analyzer.Core.Datacards.Boundaries.Models;
 using Adapt.Analyzer.Core.Datacards.Metadata;
-using Adapt.Analyzer.Core.Datacards.Models;
+using Adapt.Analyzer.Core.Datacards.Plugins.Models;
 using Adapt.Analyzer.Core.Datacards.Totals.Models;
 
 namespace Fakes.Datacards
@@ -11,27 +12,30 @@ namespace Fakes.Datacards
         private Plugin[] _plugins;
         private Metadata _metadata;
         private DatacardTotals _datacardTotals;
-        public string Id { get; }
-       
 
-        public DatacardFake(string id)
+
+        public DatacardFake()
         {
-            Id = id;
         }
 
-        public Task<Plugin[]> GetPlugins()
+        public Task<Plugin[]> GetPlugins(string id)
         {
             return Task.FromResult(_plugins);
         }
 
-        public Task<Metadata> GetMetadata()
+        public Task<Metadata> GetMetadata(string id)
         {
             return Task.FromResult(_metadata);
         }
 
-        public Task<DatacardTotals> CalculateTotals()
+        public Task<DatacardTotals> CalculateTotals(string id)
         {
             return Task.FromResult(_datacardTotals);
+        }
+
+        public Task<FieldBoundary[]> GetFieldBoundaries(string id)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void SetupPlugins(Plugin[] plugins)

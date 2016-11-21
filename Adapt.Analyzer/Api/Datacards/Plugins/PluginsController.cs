@@ -24,8 +24,8 @@ namespace Adapt.Analyzer.Api.Datacards.Plugins
         [Route("{datacardId}/plugins")]
         public async Task<IHttpActionResult> GetPlugins(string datacardId)
         {
-            var datacard = _datacardFactory.Create(datacardId);
-            var plugins = await datacard.GetPlugins();
+            var datacard = _datacardFactory.Create();
+            var plugins = await datacard.GetPlugins(datacardId);
             return Ok(plugins);
         }
     }

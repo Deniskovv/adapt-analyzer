@@ -24,8 +24,8 @@ namespace Adapt.Analyzer.Api.Datacards.Totals
         [Route("{datacardId}/totals")]
         public async Task<IHttpActionResult> GetTotals(string datacardId)
         {
-            var datacard = _datacardFactory.Create(datacardId);
-            var totals = await datacard.CalculateTotals();
+            var datacard = _datacardFactory.Create();
+            var totals = await datacard.CalculateTotals(datacardId);
             return Ok(totals);
         }
     }

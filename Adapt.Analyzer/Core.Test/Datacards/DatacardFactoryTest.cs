@@ -19,8 +19,7 @@ namespace Adapt.Analyzer.Core.Test.Datacards
         public void ShouldCreateDatacard()
         {
             var id = Guid.NewGuid().ToString();
-            var datacard = _datacardFactory.Create(id);
-            Assert.AreEqual(id, datacard.Id);
+            var datacard = _datacardFactory.Create();
             Assert.IsInstanceOf<Datacard>(datacard);
         }
     }
