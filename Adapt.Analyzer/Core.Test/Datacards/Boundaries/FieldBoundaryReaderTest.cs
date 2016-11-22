@@ -41,6 +41,53 @@ namespace Adapt.Analyzer.Core.Test.Datacards.Boundaries
             Assert.AreEqual(3, fieldBoundaries.Length);
         }
 
+        [Test]
+        public async Task ShouldOnlyGetFieldsWithoutActiveBoundaries()
+        {
+            AddDataModel(CreateDataModelWithFieldsWithoutActiveBoundaries());
+
+            var fieldBoundaries = await _fieldBoundaryReader.GetFieldBoundaries(_dataModels);
+            Assert.AreEqual(3, fieldBoundaries.Length);
+        }
+
+        [Test]
+        public async Task ShouldOnlyGetFieldsWithBoundaries()
+        {
+            AddDataModel(CreateDataModelWithFieldsWithoutBoundaries());
+
+            var fieldBoundaries = await _fieldBoundaryReader.GetFieldBoundaries(_dataModels);
+            Assert.AreEqual(1, fieldBoundaries.Length);
+        }
+
+        [Test]
+        public async Task ShouldGetEachBoundaryForEachField()
+        {
+            AddDataModel(CreateDataModelWithFieldWithMultipleBoundaries());
+
+            var fieldBoundaries = await _fieldBoundaryReader.GetFieldBoundaries(_dataModels);
+            Assert.AreEqual(3, fieldBoundaries[0].Boundaries.Length);
+            Assert.AreEqual(2, fieldBoundaries[1].Boundaries.Length);
+        }
+
+        [Test]
+        public async Task ShouldGetFieldDescriptionForEachField()
+        {
+            AddDataModel(CreateDataModelWithOneFieldBoundary());
+            _dataModels[0].DataModels[0].Catalog.Fields[0].Description = "Something good";
+
+            var fieldBoundaries = await _fieldBoundaryReader.GetFieldBoundaries(_dataModels);
+            Assert.AreEqual("Something good", fieldBoundaries[0].Description);
+        }
+
+        private void AddDataModel(ApplicationDataModel dataModel)
+        {
+            var plugin = new PredicatePlugin
+            {
+                DataModels = { dataModel }
+            };
+            _dataModels.Add(new StorageDataModel(null, plugin));
+        }
+
         private static ApplicationDataModel CreateDataModelWithOneFieldBoundary()
         {
             return new ApplicationDataModel
@@ -55,30 +102,6 @@ namespace Adapt.Analyzer.Core.Test.Datacards.Boundaries
                     {
                         CreateBoundary(31, 54)
                     }
-                }
-            };
-        }
-
-        private static FieldBoundary CreateBoundary(int boundaryId, int fieldId)
-        {
-            return new FieldBoundary
-            {
-                FieldId = fieldId,
-                Id =
-                {
-                    ReferenceId = boundaryId
-                }
-            };
-        }
-
-        private static Field CreateField(int fieldId, int activeBoundaryId)
-        {
-            return new Field
-            {
-                ActiveBoundaryId = activeBoundaryId,
-                Id =
-                {
-                    ReferenceId = fieldId
                 }
             };
         }
@@ -105,13 +128,93 @@ namespace Adapt.Analyzer.Core.Test.Datacards.Boundaries
             };
         }
 
-        private void AddDataModel(ApplicationDataModel dataModel)
+        private static ApplicationDataModel CreateDataModelWithFieldsWithoutActiveBoundaries()
         {
-            var plugin = new PredicatePlugin
+            return new ApplicationDataModel
             {
-                DataModels = { dataModel }
+                Catalog = new Catalog
+                {
+                    Fields = new List<Field>
+                    {
+                        CreateField(2, null),
+                        CreateField(3, null),
+                        CreateField(1, 98)
+                    },
+                    FieldBoundaries = new List<FieldBoundary>
+                    {
+                        CreateBoundary(34, 2),
+                        CreateBoundary(65, 3),
+                        CreateBoundary(98, 1)
+                    }
+                }
             };
-            _dataModels.Add(new StorageDataModel(null, plugin));
+        }
+
+        private static ApplicationDataModel CreateDataModelWithFieldsWithoutBoundaries()
+        {
+            return new ApplicationDataModel
+            {
+                Catalog = new Catalog
+                {
+                    Fields = new List<Field>
+                    {
+                        CreateField(2, null),
+                        CreateField(3, null),
+                        CreateField(1, 98)
+                    },
+                    FieldBoundaries = new List<FieldBoundary>
+                    {
+                        CreateBoundary(98, 1)
+                    }
+                }
+            };
+        }
+
+        private static ApplicationDataModel CreateDataModelWithFieldWithMultipleBoundaries()
+        {
+            return new ApplicationDataModel
+            {
+                Catalog = new Catalog
+                {
+                    Fields = new List<Field>
+                    {
+                        CreateField(1, 98),
+                        CreateField(3, 98)
+                    },
+                    FieldBoundaries = new List<FieldBoundary>
+                    {
+                        CreateBoundary(45, 1),
+                        CreateBoundary(47, 1),
+                        CreateBoundary(98, 1),
+                        CreateBoundary(78, 3),
+                        CreateBoundary(72, 3)
+                    }
+                }
+            };
+        }
+
+        private static FieldBoundary CreateBoundary(int boundaryId, int fieldId)
+        {
+            return new FieldBoundary
+            {
+                FieldId = fieldId,
+                Id =
+                {
+                    ReferenceId = boundaryId
+                }
+            };
+        }
+
+        private static Field CreateField(int fieldId, int? activeBoundaryId)
+        {
+            return new Field
+            {
+                ActiveBoundaryId = activeBoundaryId,
+                Id =
+                {
+                    ReferenceId = fieldId
+                }
+            };
         }
     }
 }

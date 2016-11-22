@@ -70,7 +70,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Datacards\Boundaries\BoundaryReaderTest.cs" />
     <Compile Include="Datacards\Boundaries\FieldBoundaryReaderTest.cs" />
+    <Compile Include="Datacards\Boundaries\Models\PointTest.cs" />
+    <Compile Include="Datacards\Boundaries\Models\RingTest.cs" />
+    <Compile Include="Adapt\Helpers\PointFactory.cs" />
     <Compile Include="Datacards\DatacardFactoryTest.cs" />
     <Compile Include="Datacards\DatacardTest.cs" />
     <Compile Include="Datacards\Storage\Extract\DatacardExtractorTest.cs" />
