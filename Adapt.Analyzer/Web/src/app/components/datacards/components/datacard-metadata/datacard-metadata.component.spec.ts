@@ -29,7 +29,6 @@ describe('DatacardMetadataComponent', () => {
 
         let component = createComponent();
         $httpBackend.flush();
-        $scope.$digest();
 
         let jsonFormatter = angular.element(component[0].querySelector('.json-formatter-row'));
         expect(jsonFormatter.length).toBe(1);

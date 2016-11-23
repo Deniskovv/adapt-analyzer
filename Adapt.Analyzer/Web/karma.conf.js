@@ -3,6 +3,7 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['jasmine'],
     files: [
+      'https://maps.google.com/maps/api/js?libraries=placeses,visualization,drawing,geometry,places',
       './src/spec-bundle.ts'
     ],
     exclude: [

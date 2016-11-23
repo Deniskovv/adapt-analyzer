@@ -1,3 +1,7 @@
 <div flex layout-fill>
-    <ng-map  center="41.601569, -93.736639"></ng-map>
+    <ng-map  center="41.601569, -93.736639">
+        <custom-marker ng-repeat="fieldBoundary in $ctrl.fieldBoundaries"
+            position="{{ $ctrl.convertPoint(fieldBoundary.centerPoint) }}">
+        </custom-marker>
+    </ng-map>
 </div>
