@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
 using Adapt.Analyzer.Core.Datacards;
-using Adapt.Analyzer.Core.Datacards.Storage.Save;
 
 namespace Adapt.Analyzer.Api.Datacards.Upload
 {
