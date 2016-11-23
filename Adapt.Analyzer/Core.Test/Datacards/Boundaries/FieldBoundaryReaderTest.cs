@@ -2,9 +2,11 @@
 using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards.Boundaries;
 using Adapt.Analyzer.Core.Datacards.Storage.Models;
+using Adapt.Analyzer.Core.Test.Adapt.Helpers;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using AgGateway.ADAPT.ApplicationDataModel.FieldBoundaries;
 using AgGateway.ADAPT.ApplicationDataModel.Logistics;
+using AgGateway.ADAPT.ApplicationDataModel.Shapes;
 using Fakes.AgGateway;
 using NUnit.Framework;
 
@@ -77,6 +79,16 @@ namespace Adapt.Analyzer.Core.Test.Datacards.Boundaries
 
             var fieldBoundaries = await _fieldBoundaryReader.GetFieldBoundaries(_dataModels);
             Assert.AreEqual("Something good", fieldBoundaries[0].Description);
+        }
+
+        [Test]
+        public async Task ShouldGetCenterPointForField()
+        {
+            AddDataModel(CreateDataModelWithOneFieldBoundary());
+
+            var fieldBoundaries = await _fieldBoundaryReader.GetFieldBoundaries(_dataModels);
+            Assert.AreEqual(60, fieldBoundaries[0].CenterPoint.Longitude);
+            Assert.AreEqual(34.5, fieldBoundaries[0].CenterPoint.Latitude);
         }
 
         private void AddDataModel(ApplicationDataModel dataModel)
@@ -201,6 +213,36 @@ namespace Adapt.Analyzer.Core.Test.Datacards.Boundaries
                 Id =
                 {
                     ReferenceId = boundaryId
+                },
+                SpatialData = new MultiPolygon
+                {
+                    Polygons = new List<Polygon>
+                    {
+                        new Polygon
+                        {
+                            ExteriorRing = new LinearRing
+                            {
+                                Points = new List<Point>
+                                {
+                                    PointFactory.CreatePoint(56, 21),
+                                    PointFactory.CreatePoint(58, 67),
+                                    PointFactory.CreatePoint(54, 32),
+                                }
+                            }
+                        },
+                        new Polygon
+                        {
+                            ExteriorRing = new LinearRing
+                            {
+                                Points = new List<Point>
+                                {
+                                    PointFactory.CreatePoint(61, 3),
+                                    PointFactory.CreatePoint(66, 7),
+                                    PointFactory.CreatePoint(62, 2)
+                                }
+                            }
+                        }
+                    }
                 }
             };
         }
