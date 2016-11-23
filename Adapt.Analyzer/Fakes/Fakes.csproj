@@ -68,7 +68,6 @@
     <Compile Include="AgGateway\ImportArgs.cs" />
     <Compile Include="AgGateway\PluginFactoryFake.cs" />
     <Compile Include="AgGateway\PredicatePlugin.cs" />
-    <Compile Include="Datacards\DatacardFactoryFake.cs" />
     <Compile Include="Datacards\DatacardFake.cs" />
     <Compile Include="Datacards\Save\DatacardWriterFake.cs" />
     <Compile Include="General\ConfigFake.cs" />
