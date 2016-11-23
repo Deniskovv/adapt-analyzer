@@ -7,25 +7,24 @@ namespace Adapt.Analyzer.Api.Datacards.Metadata
     [RoutePrefix("datacards")]
     public class MetadataController : ApiController
     {
-        private readonly IDatacardFactory _datacardFactory;
+        private readonly IDatacard _datacard;
 
         public MetadataController()
-            : this(new DatacardFactory())
+            : this(new Datacard())
         {
             
         }
 
-        public MetadataController(IDatacardFactory datacardFactory)
+        public MetadataController(IDatacard datacard)
         {
-            _datacardFactory = datacardFactory;
+            _datacard = datacard;
         }
 
         [HttpGet]
         [Route("{datacardId}/metadata")]
         public async Task<IHttpActionResult> GetMetadata(string datacardId)
         {
-            var datacard = _datacardFactory.Create();
-            var metadata = await datacard.GetMetadata(datacardId);
+            var metadata = await _datacard.GetMetadata(datacardId);
             return Ok(metadata);
         }
     }

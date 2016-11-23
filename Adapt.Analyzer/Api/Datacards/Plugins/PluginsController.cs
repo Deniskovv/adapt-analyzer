@@ -7,25 +7,24 @@ namespace Adapt.Analyzer.Api.Datacards.Plugins
     [RoutePrefix("datacards")]
     public class PluginsController : ApiController
     {
-        private readonly IDatacardFactory _datacardFactory;
+        private readonly IDatacard _datacard;
 
         public PluginsController()
-            : this(new DatacardFactory())
+            : this(new Datacard())
         {
             
         }
 
-        public PluginsController(IDatacardFactory datacardFactory)
+        public PluginsController(IDatacard datacard)
         {
-            _datacardFactory = datacardFactory;
+            _datacard = datacard;
         }
 
         [HttpGet]
         [Route("{datacardId}/plugins")]
         public async Task<IHttpActionResult> GetPlugins(string datacardId)
         {
-            var datacard = _datacardFactory.Create();
-            var plugins = await datacard.GetPlugins(datacardId);
+            var plugins = await _datacard.GetPlugins(datacardId);
             return Ok(plugins);
         }
     }

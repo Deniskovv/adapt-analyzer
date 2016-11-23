@@ -7,25 +7,24 @@ namespace Adapt.Analyzer.Api.Datacards.Totals
     [RoutePrefix("datacards")]
     public class TotalsController : ApiController
     {
-        private readonly IDatacardFactory _datacardFactory;
+        private readonly IDatacard _datacard;
 
         public TotalsController()
-            : this(new DatacardFactory())
+            : this(new Datacard())
         {
             
         }
 
-        public TotalsController(IDatacardFactory datacardFactory)
+        public TotalsController(IDatacard datacard)
         {
-            _datacardFactory = datacardFactory;
+            _datacard = datacard;
         }
 
         [HttpGet]
         [Route("{datacardId}/totals")]
         public async Task<IHttpActionResult> GetTotals(string datacardId)
         {
-            var datacard = _datacardFactory.Create();
-            var totals = await datacard.CalculateTotals(datacardId);
+            var totals = await _datacard.CalculateTotals(datacardId);
             return Ok(totals);
         }
     }

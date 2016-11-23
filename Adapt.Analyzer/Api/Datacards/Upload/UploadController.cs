@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
+using Adapt.Analyzer.Core.Datacards;
 using Adapt.Analyzer.Core.Datacards.Storage.Save;
 
 namespace Adapt.Analyzer.Api.Datacards.Upload
@@ -7,17 +8,17 @@ namespace Adapt.Analyzer.Api.Datacards.Upload
     [RoutePrefix("datacards/upload")]
     public class UploadController : ApiController
     {
-        private readonly IDatacardWriter _datacardWriter;
+        private readonly IDatacard _datacard;
 
         public UploadController()
-            : this(new DatacardWriter())
+            : this(new Datacard())
         {
             
         }
 
-        public UploadController(IDatacardWriter datacardWriter)
+        public UploadController(IDatacard datacard)
         {
-            _datacardWriter = datacardWriter;
+            _datacard = datacard;
         }
 
         [Route("")]
@@ -25,7 +26,7 @@ namespace Adapt.Analyzer.Api.Datacards.Upload
         public async Task<IHttpActionResult> Upload()
         {
             var bytes = await Request.Content.ReadAsByteArrayAsync();
-            var id = await _datacardWriter.Write(bytes);
+            var id = await _datacard.Save(bytes);
             return Ok(id);
         }
     }

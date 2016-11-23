@@ -13,7 +13,6 @@ namespace Adapt.Analyzer.Api.Test.Datacards.Metadata
     {
         private MetadataController _metadataController;
         private DatacardFake _datacardFake;
-        private DatacardFactoryFake _datacardFactoryFake;
         private string _datacardId;
 
         [SetUp]
@@ -21,8 +20,7 @@ namespace Adapt.Analyzer.Api.Test.Datacards.Metadata
         {
             _datacardId = Guid.NewGuid().ToString();
             _datacardFake = new DatacardFake();
-            _datacardFactoryFake = new DatacardFactoryFake(_datacardFake);
-            _metadataController = new MetadataController(_datacardFactoryFake);
+            _metadataController = new MetadataController(_datacardFake);
         }
 
         [Test]

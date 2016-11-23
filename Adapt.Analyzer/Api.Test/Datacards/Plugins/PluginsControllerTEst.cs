@@ -13,7 +13,6 @@ namespace Adapt.Analyzer.Api.Test.Datacards.Plugins
     {
         private PluginsController _pluginsController;
         private DatacardFake _datacardFake;
-        private DatacardFactoryFake _datacardFactoryFake;
         private string _datacardId;
 
 
@@ -22,9 +21,8 @@ namespace Adapt.Analyzer.Api.Test.Datacards.Plugins
         {
             _datacardId = Guid.NewGuid().ToString();
             _datacardFake = new DatacardFake();
-            _datacardFactoryFake = new DatacardFactoryFake(_datacardFake);
 
-            _pluginsController = new PluginsController(_datacardFactoryFake);
+            _pluginsController = new PluginsController(_datacardFake);
         }
 
         [Test]

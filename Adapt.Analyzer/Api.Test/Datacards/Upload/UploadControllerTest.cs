@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web.Http.Results;
 using Adapt.Analyzer.Api.Datacards.Upload;
+using Fakes.Datacards;
 using Fakes.Datacards.Save;
 using NUnit.Framework;
 
@@ -11,13 +12,13 @@ namespace Adapt.Analyzer.Api.Test.Datacards.Upload
     public class UploadControllerTest
     {
         private UploadController _uploadController;
-        private DatacardWriterFake _datacardWriterFake;
+        private DatacardFake _datacardFake;
 
         [SetUp]
         public void Setup()
         {
-            _datacardWriterFake = new DatacardWriterFake();
-            _uploadController = new UploadController(_datacardWriterFake);
+            _datacardFake = new DatacardFake();
+            _uploadController = new UploadController(_datacardFake);
         }
 
         [Test]
@@ -30,8 +31,8 @@ namespace Adapt.Analyzer.Api.Test.Datacards.Upload
             };
             var result = (OkNegotiatedContentResult<string>)await _uploadController.Upload();
 
-            Assert.AreEqual(_datacardWriterFake.WrittenBytes, bytes);
-            Assert.AreEqual(_datacardWriterFake.Id, result.Content);
+            Assert.AreEqual(_datacardFake.WrittenBytes, bytes);
+            Assert.AreEqual(_datacardFake.NewId, result.Content);
         }
     }
 }

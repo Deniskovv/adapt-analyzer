@@ -13,7 +13,6 @@ namespace Adapt.Analyzer.Api.Test.Datacards.Totals
     {
         private TotalsController _totalsController;
         private DatacardFake _datacardFake;
-        private DatacardFactoryFake _datacardFactoryFake;
         private string _datacardId;
 
 
@@ -22,9 +21,8 @@ namespace Adapt.Analyzer.Api.Test.Datacards.Totals
         {
             _datacardId = Guid.NewGuid().ToString();
             _datacardFake = new DatacardFake();
-            _datacardFactoryFake = new DatacardFactoryFake(_datacardFake);
 
-            _totalsController = new TotalsController(_datacardFactoryFake);
+            _totalsController = new TotalsController(_datacardFake);
         }
 
         [Test]

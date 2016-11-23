@@ -15,6 +15,7 @@ namespace Adapt.Analyzer.Core.Datacards
 {
     public interface IDatacard
     {
+        Task<string> Save(byte[] bytes);
         Task<Plugin[]> GetPlugins(string id);
         Task<Metadata.Metadata> GetMetadata(string id);
         Task<DatacardTotals> CalculateTotals(string id);
@@ -42,6 +43,11 @@ namespace Adapt.Analyzer.Core.Datacards
             _datacardMetadataReader = datacardMetadataReader;
             _datacardTotalsCalculator = datacardTotalsCalculator;
             _fieldBoundaryReader = fieldBoundaryReader;
+        }
+
+        public Task<string> Save(byte[] bytes)
+        {
+            return _storage.Save(bytes);
         }
 
         public Task<Plugin[]> GetPlugins(string id)

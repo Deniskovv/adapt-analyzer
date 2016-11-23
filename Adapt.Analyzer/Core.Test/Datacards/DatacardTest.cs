@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards;
 using Adapt.Analyzer.Core.Datacards.Boundaries;
@@ -7,6 +8,7 @@ using Adapt.Analyzer.Core.Datacards.Metadata;
 using Adapt.Analyzer.Core.Datacards.Plugins;
 using Adapt.Analyzer.Core.Datacards.Storage;
 using Adapt.Analyzer.Core.Datacards.Storage.Extract;
+using Adapt.Analyzer.Core.Datacards.Storage.Save;
 using Adapt.Analyzer.Core.Datacards.Totals.Calculators;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using AgGateway.ADAPT.ApplicationDataModel.Common;
@@ -27,7 +29,6 @@ namespace Adapt.Analyzer.Core.Test.Datacards
         private PluginFactoryFake _pluginFactory;
         private string _id;
         private Datacard _datacard;
-        private DatacardPath _datacardPath;
 
         [SetUp]
         public void Setup()
@@ -39,13 +40,7 @@ namespace Adapt.Analyzer.Core.Test.Datacards
             _fileSystemFake = new FileSystemFake();
             _pluginFactory = new PluginFactoryFake();
 
-            _datacardPath = new DatacardPath(_configFake);
-            var datacardExtractor = new DatacardExtractor(_datacardPath, _fileSystemFake);
-            var datacardStorage = new DatacardStorage(null, datacardExtractor, _pluginFactory);
-            var datacardPluginFinder = new DatacardPluginFinder();
-            var datacardMetadataReader = new DatacardMetadataReader();
-            var datacardTotalsCalculator = new DatacardTotalsCalculator(new FieldTotalsCalculator());
-            _datacard = new Datacard(datacardStorage, datacardPluginFinder, datacardMetadataReader, datacardTotalsCalculator, new FieldBoundaryReader());
+            _datacard = CreateDatacard();
         }
 
         [Test]
@@ -89,6 +84,16 @@ namespace Adapt.Analyzer.Core.Test.Datacards
 
             var fieldBoundaries = await _datacard.GetFieldBoundaries(_id);
             Assert.AreEqual(1, fieldBoundaries.Length);
+        }
+
+        [Test]
+        public async Task ShouldSaveDatacard()
+        {
+            var bytes = new byte[] { 34, 23, 7, 6, 8, 23 };
+
+            var result = await _datacard.Save(bytes);
+            Assert.AreEqual(_fileSystemFake.WrittenFile, Path.Combine(_configFake.DatacardsDirectory, result + ".zip"));
+            Assert.AreEqual(_fileSystemFake.WrittenBytes, bytes);
         }
 
         private ApplicationDataModel CreateDataModelWithFieldBoundaries()
@@ -144,6 +149,18 @@ namespace Adapt.Analyzer.Core.Test.Datacards
                     }
                 }
             };
+        }
+
+        private Datacard CreateDatacard()
+        {
+            var datacardPath = new DatacardPath(_configFake);
+            var datacardWriter = new DatacardWriter(_configFake, _fileSystemFake);
+            var datacardExtractor = new DatacardExtractor(datacardPath, _fileSystemFake);
+            var datacardStorage = new DatacardStorage(datacardWriter, datacardExtractor, _pluginFactory);
+            var datacardPluginFinder = new DatacardPluginFinder();
+            var datacardMetadataReader = new DatacardMetadataReader();
+            var datacardTotalsCalculator = new DatacardTotalsCalculator(new FieldTotalsCalculator());
+            return new Datacard(datacardStorage, datacardPluginFinder, datacardMetadataReader, datacardTotalsCalculator, new FieldBoundaryReader());
         }
     }
 }
