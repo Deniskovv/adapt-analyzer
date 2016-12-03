@@ -24,7 +24,7 @@ namespace Adapt.Analyzer.Api.Test.Datacards.Boundaries
         [Test]
         public async Task ShouldGetFieldBoundaries()
         {
-            var fieldBoundaries = new []{new FieldBoundary(null, null), new FieldBoundary(null, null), new FieldBoundary(null, null)};
+            var fieldBoundaries = new []{new FieldBoundary(1, null, null), new FieldBoundary(2, null, null), new FieldBoundary(3, null, null)};
             _datacardFake.SetupFieldBoundaries(fieldBoundaries);
 
             var result = (OkNegotiatedContentResult<FieldBoundary[]>)await _boundariesController.GetFieldBoundaries(Guid.NewGuid().ToString());

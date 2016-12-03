@@ -13,15 +13,16 @@ module.exports = function make(env) {
             sourceMapFilename: '[file].map'
         },
         resolve: {
-            extensions: ['', '.ts', '.js', '.scss', '.css', '.html', '.json']
+            extensions: ['', '.ts', '.js', '.scss', '.css', '.html', '.json'],
+            alias: getAlias(env)
         },
         plugins: getPlugins(env),
         module: {
             loaders: [
-                { test: /\.ts$/, loader: 'ts', exclude: /node_modules/ },
-                { test: /\.(scss|css)$/, loader: 'style!css!sass' },
-                { test: /\.html$/, loader: 'html' }
-            ]
+        { test: /\.ts$/, loader: 'ts', exclude: /node_modules/ },
+        { test: /\.(scss|css)$/, loader: 'style!css!sass' },
+        { test: /\.html$/, loader: 'html' }
+    ]
         }
     }
 }
@@ -40,10 +41,19 @@ function getDevtool(env) {
     if (isTest(env))
         return undefined;
 
-    if (isProd(env)) 
+    if (isProd(env))
         return 'cheap-module-source-map';
 
     return 'source-map';
+}
+
+function getAlias(env) {
+    if (!isTest(env))
+        return undefined;
+    
+    return {
+        'google': path.resolve(__dirname, './src/fakes/google-maps.fake.ts')
+    };
 }
 
 function getPlugins(env) {
@@ -60,6 +70,10 @@ function getPlugins(env) {
             filename: null,
             test: /\.(ts|js)($|\?)/i
         }))
+
+        plugins.push(new webpack.ProvidePlugin({
+            google: 'google'
+        }))
         return plugins;
     }
 
@@ -68,7 +82,7 @@ function getPlugins(env) {
         minChunks: Infinity
     }));
     plugins.push(createCopyPlugin(env));
-    
+
     if (isProd(env)) {
         plugins.push(new webpack.optimize.DedupePlugin());
         plugins.push(new webpack.optimize.OccurenceOrderPlugin());

@@ -1,15 +1,18 @@
 import * as angular from 'angular';
 
 import { FieldBoundary } from '../../models';
+import { MapsService } from '../../services/maps.service';
 import { DatacardFieldBoundaryComponent } from './datacard-field-boundary.component';
 
 describe('DatacardFieldBoundaryComponent', () => {
     let $scope: angular.IScope;
     let fieldBoundary: FieldBoundary;
+    let mapsService: MapsService;
     let createComponent: () => angular.IAugmentedJQuery;
 
-    beforeEach(angular.mock.inject((_$compile_, _$rootScope_) => {
+    beforeEach(angular.mock.inject((_$compile_, _$rootScope_, _MapsService_) => {
         fieldBoundary = {};
+        mapsService = _MapsService_;
         $scope = _$rootScope_.$new();
 
         createComponent = () => {
@@ -36,5 +39,16 @@ describe('DatacardFieldBoundaryComponent', () => {
 
         let component = createComponent();
         expect(component.find('marker').attr('title')).toBe('Field #1');
+    });
+
+    it('should show map info for field boundary', () => {
+        spyOn(mapsService, 'showInfoWindow').and.callThrough();
+        fieldBoundary.id = 234;
+
+        let component = createComponent();
+        component.find('datacard-field-boundary').isolateScope()['$ctrl'].toggleInfoWindow.bind(this)();
+        $scope.$digest();
+
+        expect(mapsService.showInfoWindow).toHaveBeenCalledWith('234');
     });
 });

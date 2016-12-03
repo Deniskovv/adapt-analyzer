@@ -6,6 +6,10 @@ export class MapsService {
     convertPoint(point: Point): number[] {
         return [point.latitude, point.longitude];
     }
+
+    showInfoWindow(id: string): void {
+        
+    }
 }
 angular.module('adapt.analyzer')
     .service('MapsService', MapsService);

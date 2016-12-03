@@ -19,7 +19,23 @@ export class DatacardFieldBoundaryComponent {
             && this.fieldBoundary.description;
     }
 
-    constructor(private mapsService: MapsService) {}
+    get id(): number {
+        return this.fieldBoundary
+            && this.fieldBoundary.id;
+    }
+
+    get markerId(): string {
+        return this.fieldBoundary
+            && `${this.fieldBoundary.id}-marker`
+    }
+
+    constructor(private mapsService: MapsService) {
+        this.toggleInfoWindow = this.toggleInfoWindow.bind(this);
+    }
+
+    toggleInfoWindow(): void {
+        this.mapsService.showInfoWindow(`${this.fieldBoundary.id}`);
+    }
 }
 angular.module('adapt.analyzer')
     .component('datacardFieldBoundary', {

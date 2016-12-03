@@ -8,10 +8,12 @@ namespace Adapt.Analyzer.Core.Datacards.Boundaries.Models
         public Boundary[] Boundaries { get; }
         public string Description { get; }
         public Point CenterPoint { get; }
+        public int Id { get; }
 
-        public FieldBoundary(string description, Boundary[] boundaries)
+        public FieldBoundary(int id, string description, Boundary[] boundaries)
         {
             Boundaries = boundaries;
+            Id = id;
             CenterPoint = GetCenterPoint(boundaries);
             Description = description;
         }

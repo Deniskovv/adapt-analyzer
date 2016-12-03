@@ -1,1 +1,15 @@
-<marker position="{{ $ctrl.center }}" title="{{ $ctrl.title }}" ></marker>
+<marker position="{{ $ctrl.center }}" 
+        title="{{ $ctrl.title }}" 
+        on-click="$ctrl.toggleInfoWindow()"
+        id="{{ $ctrl.markerId }}">
+</marker>
+
+<info-window id="{{ $ctrl.id }}" visible-on-marker="{{ $ctrl.markerId }}">
+    <md-content flex layout="row">
+        <md-list>
+            <md-list-item ng-repeat="boundary in $ctrl.boundaries">
+                
+            </md-list-item>
+        </md-list>
+    </md-content>
+</info-window>

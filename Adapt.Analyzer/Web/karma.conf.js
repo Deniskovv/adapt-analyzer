@@ -3,7 +3,6 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['jasmine'],
     files: [
-      'https://maps.googleapis.com/maps/api/js',
       './src/spec-bundle.ts'
     ],
     exclude: [

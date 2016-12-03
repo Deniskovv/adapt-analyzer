@@ -4,6 +4,7 @@ using Adapt.Analyzer.Core.Datacards.Boundaries;
 using Adapt.Analyzer.Core.Datacards.Storage.Models;
 using Adapt.Analyzer.Core.Test.Adapt.Helpers;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
+using AgGateway.ADAPT.ApplicationDataModel.Common;
 using AgGateway.ADAPT.ApplicationDataModel.FieldBoundaries;
 using AgGateway.ADAPT.ApplicationDataModel.Logistics;
 using AgGateway.ADAPT.ApplicationDataModel.Shapes;
@@ -79,6 +80,15 @@ namespace Adapt.Analyzer.Core.Test.Datacards.Boundaries
 
             var fieldBoundaries = await _fieldBoundaryReader.GetFieldBoundaries(_dataModels);
             Assert.AreEqual("Something good", fieldBoundaries[0].Description);
+        }
+
+        [Test]
+        public async Task ShouldGetFieldReferenceIdForEachField()
+        {
+            AddDataModel(CreateDataModelWithOneFieldBoundary());
+
+            var fieldBoundaries = await _fieldBoundaryReader.GetFieldBoundaries(_dataModels);
+            Assert.AreEqual(_dataModels[0].DataModels[0].Catalog.Fields[0].Id.ReferenceId, fieldBoundaries[0].Id);
         }
 
         [Test]

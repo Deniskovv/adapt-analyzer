@@ -61,7 +61,7 @@ namespace Adapt.Analyzer.Core.Datacards.Boundaries
         private async Task<FieldBoundary> CreateFieldBoundary(Field field, IEnumerable<AgGateway.ADAPT.ApplicationDataModel.FieldBoundaries.FieldBoundary> fieldBoundaries)
         {
             var boundaries = await _boundaryReader.GetBoundaries(fieldBoundaries);
-            return new FieldBoundary(field.Description, boundaries);
+            return new FieldBoundary(field.Id.ReferenceId, field.Description, boundaries);
         }
     }
 }
