@@ -92,8 +92,8 @@ namespace Adapt.Analyzer.Core.Test.Datacards
             var bytes = new byte[] { 34, 23, 7, 6, 8, 23 };
 
             var result = await _datacard.Save(bytes);
-            Assert.AreEqual(_fileSystemFake.WrittenFile, Path.Combine(_configFake.DatacardsDirectory, result + ".zip"));
-            Assert.AreEqual(_fileSystemFake.WrittenBytes, bytes);
+            Assert.AreEqual(Path.Combine(_configFake.DatacardsDirectory, result, "Datacard.zip"), _fileSystemFake.WrittenFile);
+            Assert.AreEqual(bytes, _fileSystemFake.WrittenBytes);
         }
 
         private ApplicationDataModel CreateDataModelWithFieldBoundaries()
@@ -154,7 +154,7 @@ namespace Adapt.Analyzer.Core.Test.Datacards
         private Datacard CreateDatacard()
         {
             var datacardPath = new DatacardPath(_configFake);
-            var datacardWriter = new DatacardWriter(_configFake, _fileSystemFake);
+            var datacardWriter = new DatacardWriter(datacardPath, _fileSystemFake);
             var datacardExtractor = new DatacardExtractor(datacardPath, _fileSystemFake);
             var datacardStorage = new DatacardStorage(datacardWriter, datacardExtractor, _pluginFactory);
             var datacardPluginFinder = new DatacardPluginFinder();

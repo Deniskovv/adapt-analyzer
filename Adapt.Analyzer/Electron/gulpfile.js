@@ -23,7 +23,7 @@ var paths = {
 function startProcess(options) {
     var cwd = options.cwd ? options.cwd : '.';
     var process = spawn(options.cmd, options.args, { shell: true, cwd: cwd });
-    process.on('close', () => {
+    process.on('close', function() {
         options.callback();
     });
 }
@@ -38,7 +38,7 @@ gulp.task('clean-package', function (cb) {
 
 gulp.task('nuget-restore', function (cb) {
     var options = {
-        cmd: `"${paths.nuget}"`,
+        cmd: paths.nuget,
         args: [
             'restore',
             paths.solution
@@ -50,7 +50,7 @@ gulp.task('nuget-restore', function (cb) {
 
 gulp.task('build-api', ['clean', 'nuget-restore'], function (cb) {
     var options = {
-        cmd: `"${paths.msbuild}"`,
+        cmd: paths.msbuild,
         callback: cb,
         args: [
             paths.solution,
@@ -110,7 +110,7 @@ gulp.task('test-electron', function () {
 
 gulp.task('zip-package', ['package-app'], function() {
     return gulp.src(paths.packagedir)
-        .pipe(zip(`adapt-analyzer-win32-x64-${package_json.version}.zip`))
+        .pipe(zip('adapt-analyzer-win32-x64-' + package_json.version + '.zip'))
         .pipe(gulp.dest('dist'));
 });
 

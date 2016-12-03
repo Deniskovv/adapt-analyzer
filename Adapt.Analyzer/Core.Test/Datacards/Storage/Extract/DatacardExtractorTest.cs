@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards.Storage;
 using Adapt.Analyzer.Core.Datacards.Storage.Extract;
 using Fakes.General;
@@ -27,25 +28,25 @@ namespace Adapt.Analyzer.Core.Test.Datacards.Storage.Extract
         }
 
         [Test]
-        public void ShouldExtractDatacardToDatacardDirectory()
+        public async Task ShouldExtractDatacardToDatacardDirectory()
         {
             var id = Guid.NewGuid().ToString();
 
-            var datacardPath = _datacardExtractor.Extract(id);
-            Assert.AreEqual(Path.Combine(DatacardsDirectory, id), datacardPath);
-            Assert.AreEqual(Path.Combine(DatacardsDirectory, id + ".zip"), _fileSystemFake.ZipFilePath);
+            var datacardPath = await _datacardExtractor.Extract(id);
+            Assert.AreEqual(Path.Combine(DatacardsDirectory, id, "Extracted"), datacardPath);
+            Assert.AreEqual(Path.Combine(DatacardsDirectory, id, "Datacard.zip"), _fileSystemFake.ZipFilePath);
         }
 
         [Test]
-        public void ShouldNotExtractDatacardIfAlreadyExtracted()
+        public async Task ShouldNotExtractDatacardIfAlreadyExtracted()
         {
             _fileSystemFake.DoesDirectoryExist = true;
 
             var id = Guid.NewGuid().ToString();
 
-            var datacardPath = _datacardExtractor.Extract(id);
+            var datacardPath = await _datacardExtractor.Extract(id);
             Assert.Null(_fileSystemFake.ZipFilePath);
-            Assert.AreEqual(Path.Combine(DatacardsDirectory, id), datacardPath);
+            Assert.AreEqual(Path.Combine(DatacardsDirectory, id, "Extracted"), datacardPath);
         }
     }
 }

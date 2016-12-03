@@ -38,12 +38,12 @@ namespace Adapt.Analyzer.Core.Datacards.Storage
             return _writer.Write(bytes);
         }
 
-        public Task<StorageDataModel[]> GetDataModels(string id)
+        public async Task<StorageDataModel[]> GetDataModels(string id)
         {
-            var datacardPath = _extractor.Extract(id);
+            var datacardPath = await _extractor.Extract(id);
             var plugins = _pluginFactory.GetSupportedPlugins(datacardPath);
             var storageModels = plugins.Select(p => new StorageDataModel(datacardPath, p));
-            return Task.FromResult(storageModels.ToArray());
+            return storageModels.ToArray();
         }
     }
 }

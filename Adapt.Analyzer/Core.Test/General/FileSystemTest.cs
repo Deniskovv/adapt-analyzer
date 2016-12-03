@@ -50,6 +50,15 @@ namespace Adapt.Analyzer.Core.Test.General
             Assert.True(exists);
         }
 
+        [Test]
+        public void CreateDirectoryShouldCreateDirectory()
+        {
+            _directoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+
+            _fileSystem.CreateDirectory(_directoryPath);
+            Assert.IsTrue(Directory.Exists(_directoryPath));
+        }
+
         [TearDown]
         public void Teardown()
         {

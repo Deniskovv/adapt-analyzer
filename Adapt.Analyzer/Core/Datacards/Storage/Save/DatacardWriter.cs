@@ -13,26 +13,48 @@ namespace Adapt.Analyzer.Core.Datacards.Storage.Save
     public class DatacardWriter : IDatacardWriter
     {
         private readonly IFileSystem _fileSystem;
-        private readonly string _datacardsDirectory;
+        private readonly IDatacardPath _datacardPath;
 
         public DatacardWriter()
-            : this(new Config(), new FileSystem())
+            : this(new DatacardPath(), new FileSystem())
         {
             
         }
 
-        public DatacardWriter(IConfig config, IFileSystem fileSystem)
+        public DatacardWriter(IDatacardPath datacardPath, IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;
-            _datacardsDirectory = config.GetSetting("datacards-dir");
+            _datacardPath = datacardPath;
         }
 
         public Task<string> Write(byte[] bytes)
         {
-            var id = Guid.NewGuid();
-            var datacardPath = Path.Combine(_datacardsDirectory, id + ".zip");
+            var id = Guid.NewGuid().ToString();
+            EnsureDatacardDirectoryExists(id);
+            WriteDatacard(id, bytes);
+            return Task.FromResult(id);
+        }
+
+        private void WriteDatacard(string id, byte[] bytes)
+        {
+            var datacardPath = _datacardPath.GetZipFilePath(id);
             _fileSystem.WriteAllBytes(datacardPath, bytes);
-            return Task.FromResult(id.ToString());
+        }
+
+        private void EnsureDatacardDirectoryExists(string id)
+        {
+            EnsureDatacardsDirectoryExists();
+
+            var directoryPath = _datacardPath.GetDatacardPath(id);
+            if (!_fileSystem.DirectoryExists(directoryPath))
+                _fileSystem.CreateDirectory(directoryPath);
+        }
+
+        private void EnsureDatacardsDirectoryExists()
+        {
+            var datacardsPath = _datacardPath.GetDatacardsPath();
+            if (!_fileSystem.DirectoryExists(datacardsPath))
+                _fileSystem.CreateDirectory(datacardsPath);
         }
     }
 }

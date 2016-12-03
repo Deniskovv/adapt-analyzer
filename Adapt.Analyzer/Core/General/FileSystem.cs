@@ -8,6 +8,7 @@ namespace Adapt.Analyzer.Core.General
         void WriteAllBytes(string path, byte[] bytes);
         void ExtractZip(string zipFilePath, string destinationPath);
         bool DirectoryExists(string directoryPath);
+        void CreateDirectory(string directoryPath);
     }
 
     public class FileSystem : IFileSystem
@@ -25,6 +26,11 @@ namespace Adapt.Analyzer.Core.General
         public bool DirectoryExists(string directoryPath)
         {
             return Directory.Exists(directoryPath);
+        }
+
+        public void CreateDirectory(string directoryPath)
+        {
+            Directory.CreateDirectory(directoryPath);
         }
     }
 }

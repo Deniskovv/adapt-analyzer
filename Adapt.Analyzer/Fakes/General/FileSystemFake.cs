@@ -1,4 +1,5 @@
-﻿using Adapt.Analyzer.Core.General;
+﻿using System.Collections.Generic;
+using Adapt.Analyzer.Core.General;
 
 namespace Fakes.General
 {
@@ -11,6 +12,12 @@ namespace Fakes.General
         public string DestinationPath { get; private set; }
 
         public bool DoesDirectoryExist { get; set; }
+        public List<string> CreatedDirectories { get; private set; }
+
+        public FileSystemFake()
+        {
+            CreatedDirectories = new List<string>();
+        }
 
         public void WriteAllBytes(string path, byte[] bytes)
         {
@@ -27,6 +34,11 @@ namespace Fakes.General
         public bool DirectoryExists(string directoryPath)
         {
             return DoesDirectoryExist;
+        }
+
+        public void CreateDirectory(string directoryPath)
+        {
+            CreatedDirectories.Add(directoryPath);
         }
     }
 }

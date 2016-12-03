@@ -5,7 +5,7 @@ import { datacardMetadataState } from './components/datacard-metadata/datacard-m
 import { datacardTotalsState } from './components/datacard-totals/datacard-totals.state';
 
 export class DatacardComponent {
-    static $inject = ['$state']
+    static $inject = ['$state'];
     selectedTab: number;
 
     constructor(private $state: angular.ui.IStateService) {
