@@ -5,12 +5,14 @@ import { MapsService } from '../../services/maps.service';
 import { DatacardFieldBoundaryComponent } from './datacard-field-boundary.component';
 
 describe('DatacardFieldBoundaryComponent', () => {
+    let $injector: angular.auto.IInjectorService;
     let $scope: angular.IScope;
     let fieldBoundary: FieldBoundary;
     let mapsService: MapsService;
     let createComponent: () => angular.IAugmentedJQuery;
 
-    beforeEach(angular.mock.inject((_$compile_, _$rootScope_, _MapsService_) => {
+    beforeEach(angular.mock.inject((_$injector_, _$compile_, _$rootScope_, _MapsService_) => {
+        $injector = _$injector_;
         fieldBoundary = {};
         mapsService = _MapsService_;
         $scope = _$rootScope_.$new();
@@ -50,5 +52,25 @@ describe('DatacardFieldBoundaryComponent', () => {
         $scope.$digest();
 
         expect(mapsService.showInfoWindow).toHaveBeenCalledWith('234');
+    });
+
+    it('should have a checkbox for each boundary', () => {
+        fieldBoundary.boundaries = [{}, {}, {}];
+
+        let component = createComponent();
+        expect(component.find('input').length).toBe(3);
+    });
+
+    it('should have a datacard boundary for each boundary', () => {
+        fieldBoundary.boundaries = [{}, {}, {}];
+
+        let component = createComponent();
+        expect(component.find('datacard-boundary').length).toBe(3);
+    });
+    
+
+    it('should include boundary', () => {
+        let directive = $injector.get<angular.IDirective[]>('datacardBoundaryDirective');
+        expect(directive.length).toBe(1);
     });
 });

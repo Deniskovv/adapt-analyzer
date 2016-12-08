@@ -1,0 +1,21 @@
+<shape ng-repeat="exterior in $ctrl.exteriors" 
+    name="polygon" 
+    paths="{{ $ctrl.toPaths(exterior) }}"
+    stroke-color="#36840f"
+    stroke-opacity="0.8"
+    stroke-weight="2"
+    fill-color="#36840f"
+    fill-opacity="0.3">
+
+</shape>
+
+<shape ng-repeat="interior in $ctrl.interiors" 
+    name="polygon" 
+    paths="{{ $ctrl.toPaths(interior) }}"
+    stroke-color="#ce1c1c"
+    stroke-opacity="0.8"
+    stroke-weight="1"
+    fill-color="#ce1c1c"
+    fill-opacity="0.3">
+
+</shape>

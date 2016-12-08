@@ -1,8 +1,12 @@
 import * as angular from 'angular';
 
-import { FieldBoundary } from '../../models';
+import { 
+    FieldBoundary,
+    Boundary 
+} from '../../models';
 import { MapsService } from '../../services/maps.service';
 
+import '../datacard-boundary/datacard-boundary.component';
 export class DatacardFieldBoundaryComponent {
     static $inject = ['MapsService'];
 
@@ -27,6 +31,11 @@ export class DatacardFieldBoundaryComponent {
     get markerId(): string {
         return this.fieldBoundary
             && `${this.fieldBoundary.id}-marker`
+    }
+
+    get boundaries(): Boundary[] {
+        return this.fieldBoundary
+            && this.fieldBoundary.boundaries;
     }
 
     constructor(private mapsService: MapsService) {

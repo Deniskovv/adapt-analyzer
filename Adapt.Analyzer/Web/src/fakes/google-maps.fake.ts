@@ -1,17 +1,7 @@
-export function LatLng(lat, lng) {
-
-}
-
-export function Map(obj) {
-    this.obj = obj;
-}
-Map.prototype.setOptions = function(options) {
-    this.options = options;
-}
-
-export function InfoWindow(options) {
-    this.options = options;
-}
+import { LatLng } from './google-latlng.fake';
+import { InfoWindow } from './google-info-window.fake';
+import { Map } from './google-map.fake';
+import { Polygon } from './google-polygon.fake';
 
 export const maps = {
     OverlayView: () => {
@@ -23,6 +13,7 @@ export const maps = {
     LatLng: LatLng,
     Map: Map,
     InfoWindow: InfoWindow,
+    Polygon: Polygon,
     MapTypeId: { ROADMAP: true },
     event: {
         addListener: (marker, eventName, event) => {

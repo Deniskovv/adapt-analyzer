@@ -1,15 +1,15 @@
-<marker position="{{ $ctrl.center }}" 
-        title="{{ $ctrl.title }}" 
-        on-click="$ctrl.toggleInfoWindow()"
-        id="{{ $ctrl.markerId }}">
+<marker position="{{ $ctrl.center }}" title="{{ $ctrl.title }}" on-click="$ctrl.toggleInfoWindow()" id="{{ $ctrl.markerId }}">
 </marker>
 
-<info-window id="{{ $ctrl.id }}" visible-on-marker="{{ $ctrl.markerId }}">
-    <md-content flex layout="row">
+<info-window id="{{ $ctrl.id }}">
+    <div flex layout="row">
         <md-list>
-            <md-list-item ng-repeat="boundary in $ctrl.boundaries">
-                
+            <md-list-item layout="row" class="md-2-line" ng-repeat="boundary in $ctrl.boundaries">
+                <input ng-model="boundary.isVisible" type="checkbox">
+                <p>Boundary {{ $index + 1 }}
             </md-list-item>
         </md-list>
-    </md-content>
+    </div>
 </info-window>
+
+<datacard-boundary boundary="boundary" ng-repeat="boundary in $ctrl.boundaries"></datacard-boundary>
