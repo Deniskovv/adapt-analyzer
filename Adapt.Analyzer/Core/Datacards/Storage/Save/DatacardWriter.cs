@@ -1,41 +1,54 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Adapt.Analyzer.Core.Datacards.Models;
+using Adapt.Analyzer.Core.Datacards.Storage.Models;
 using Adapt.Analyzer.Core.General;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Adapt.Analyzer.Core.Datacards.Storage.Save
 {
     public interface IDatacardWriter
     {
-        Task<string> Write(byte[] bytes);
+        Task<string> Write(DatacardModel datacardModel);
     }
 
     public class DatacardWriter : IDatacardWriter
     {
         private readonly IFileSystem _fileSystem;
+        private readonly ISerializer _serializer;
         private readonly IDatacardPath _datacardPath;
 
         public DatacardWriter()
-            : this(new DatacardPath(), new FileSystem())
+            : this(new DatacardPath(), new FileSystem(), new Serializer())
         {
             
         }
 
-        public DatacardWriter(IDatacardPath datacardPath, IFileSystem fileSystem)
+        public DatacardWriter(IDatacardPath datacardPath, IFileSystem fileSystem, ISerializer serializer)
         {
             _fileSystem = fileSystem;
+            _serializer = serializer;
             _datacardPath = datacardPath;
         }
 
-        public Task<string> Write(byte[] bytes)
+        public Task<string> Write(DatacardModel datacardModel)
         {
             var id = Guid.NewGuid().ToString();
             EnsureDatacardDirectoryExists(id);
-            WriteDatacard(id, bytes);
+            WriteDatacardZipFile(id, datacardModel.Bytes);
+            WriteDatacardJsonFile(id, datacardModel);
             return Task.FromResult(id);
         }
 
-        private void WriteDatacard(string id, byte[] bytes)
+        private void WriteDatacardJsonFile(string id, DatacardModel datacardModel)
+        {
+            var datacardPath = _datacardPath.GetJsonFilePath(id);
+            _fileSystem.WriteAllText(datacardPath, _serializer.Serialize(datacardModel));
+        }
+
+        private void WriteDatacardZipFile(string id, byte[] bytes)
         {
             var datacardPath = _datacardPath.GetZipFilePath(id);
             _fileSystem.WriteAllBytes(datacardPath, bytes);

@@ -77,6 +77,7 @@
     <Compile Include="Datacards\Metadata\PluginDataModel.cs" />
     <Compile Include="Datacards\Plugins\Models\Plugin.cs" />
     <Compile Include="Datacards\Storage\DatacardStorage.cs" />
+    <Compile Include="Datacards\Models\DatacardModel.cs" />
     <Compile Include="Datacards\Storage\Models\StorageDataModel.cs" />
     <Compile Include="Datacards\Totals\Calculators\Strategies\AggregateStrategyFactory.cs" />
     <Compile Include="Datacards\Totals\Calculators\Strategies\AverageAggregateStrategy.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Datacards\Storage\Save\DatacardWriter.cs" />
     <Compile Include="General\Config.cs" />
     <Compile Include="General\FileSystem.cs" />
+    <Compile Include="General\Serializer.cs" />
     <Compile Include="General\Timer.cs" />
     <Compile Include="General\TimerFactory.cs" />
     <Compile Include="OperationDataExtensions.cs" />

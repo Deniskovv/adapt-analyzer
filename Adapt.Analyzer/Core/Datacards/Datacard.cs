@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards.Boundaries;
 using Adapt.Analyzer.Core.Datacards.Boundaries.Models;
 using Adapt.Analyzer.Core.Datacards.Metadata;
+using Adapt.Analyzer.Core.Datacards.Models;
 using Adapt.Analyzer.Core.Datacards.Plugins;
 using Adapt.Analyzer.Core.Datacards.Plugins.Models;
 using Adapt.Analyzer.Core.Datacards.Storage;
@@ -15,7 +16,8 @@ namespace Adapt.Analyzer.Core.Datacards
 {
     public interface IDatacard
     {
-        Task<string> Save(byte[] bytes);
+        Task<string> Save(DatacardModel datacardModel);
+        Task<DatacardModel[]> GetDatacards();
         Task<Plugin[]> GetPlugins(string id);
         Task<Metadata.Metadata> GetMetadata(string id);
         Task<DatacardTotals> CalculateTotals(string id);
@@ -45,9 +47,9 @@ namespace Adapt.Analyzer.Core.Datacards
             _fieldBoundaryReader = fieldBoundaryReader;
         }
 
-        public Task<string> Save(byte[] bytes)
+        public Task<string> Save(DatacardModel datacardModel)
         {
-            return _storage.Save(bytes);
+            return _storage.Save(datacardModel);
         }
 
         public Task<Plugin[]> GetPlugins(string id)
@@ -68,6 +70,11 @@ namespace Adapt.Analyzer.Core.Datacards
         public Task<FieldBoundary[]> GetFieldBoundaries(string id)
         {
             return GetData(id, _fieldBoundaryReader.GetFieldBoundaries);
+        }
+
+        public Task<DatacardModel[]> GetDatacards()
+        {
+            return _storage.GetDatacards();
         }
 
         private async Task<T> GetData<T>(string id, Func<IEnumerable<StorageDataModel>, Task<T>> func)

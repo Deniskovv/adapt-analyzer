@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards;
 using Adapt.Analyzer.Core.Datacards.Boundaries.Models;
 using Adapt.Analyzer.Core.Datacards.Metadata;
+using Adapt.Analyzer.Core.Datacards.Models;
 using Adapt.Analyzer.Core.Datacards.Plugins.Models;
 using Adapt.Analyzer.Core.Datacards.Totals.Models;
 
@@ -14,15 +16,21 @@ namespace Fakes.Datacards
         private Metadata _metadata;
         private DatacardTotals _datacardTotals;
         private FieldBoundary[] _fieldBoundaries;
+        private DatacardModel[] _datacardModels;
 
         public byte[] WrittenBytes { get; private set; }
         public string NewId { get; private set; }
 
-        public Task<string> Save(byte[] bytes)
+        public Task<string> Save(DatacardModel datacardModel)
         {
-            WrittenBytes = bytes;
+            WrittenBytes = datacardModel.Bytes;
             NewId = Guid.NewGuid().ToString();
             return Task.FromResult(NewId);
+        }
+
+        public Task<DatacardModel[]> GetDatacards()
+        {
+            return Task.FromResult(_datacardModels);
         }
 
         public Task<Plugin[]> GetPlugins(string id)
@@ -63,6 +71,11 @@ namespace Fakes.Datacards
         public void SetupFieldBoundaries(FieldBoundary[] fieldBoundaries)
         {
             _fieldBoundaries = fieldBoundaries;
+        }
+
+        public void SetupDatacardModels(DatacardModel[] datacardModels)
+        {
+            _datacardModels = datacardModels;
         }
     }
 }

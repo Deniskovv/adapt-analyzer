@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 using Adapt.Analyzer.Core.Datacards;
 using Adapt.Analyzer.Core.Datacards.Boundaries;
 using Adapt.Analyzer.Core.Datacards.Metadata;
+using Adapt.Analyzer.Core.Datacards.Models;
 using Adapt.Analyzer.Core.Datacards.Plugins;
 using Adapt.Analyzer.Core.Datacards.Storage;
 using Adapt.Analyzer.Core.Datacards.Storage.Extract;
+using Adapt.Analyzer.Core.Datacards.Storage.Models;
 using Adapt.Analyzer.Core.Datacards.Storage.Save;
 using Adapt.Analyzer.Core.Datacards.Totals.Calculators;
+using Adapt.Analyzer.Core.General;
 using AgGateway.ADAPT.ApplicationDataModel.ADM;
 using AgGateway.ADAPT.ApplicationDataModel.Common;
 using AgGateway.ADAPT.ApplicationDataModel.FieldBoundaries;
@@ -17,6 +20,8 @@ using AgGateway.ADAPT.ApplicationDataModel.LoggedData;
 using AgGateway.ADAPT.ApplicationDataModel.Logistics;
 using Fakes.AgGateway;
 using Fakes.General;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 
 namespace Adapt.Analyzer.Core.Test.Datacards
@@ -29,6 +34,7 @@ namespace Adapt.Analyzer.Core.Test.Datacards
         private PluginFactoryFake _pluginFactory;
         private string _id;
         private Datacard _datacard;
+        private Serializer _serializer;
 
         [SetUp]
         public void Setup()
@@ -39,6 +45,7 @@ namespace Adapt.Analyzer.Core.Test.Datacards
 
             _fileSystemFake = new FileSystemFake();
             _pluginFactory = new PluginFactoryFake();
+            _serializer = new Serializer();
 
             _datacard = CreateDatacard();
         }
@@ -90,10 +97,24 @@ namespace Adapt.Analyzer.Core.Test.Datacards
         public async Task ShouldSaveDatacard()
         {
             var bytes = new byte[] { 34, 23, 7, 6, 8, 23 };
+            var newDatacard = new DatacardModel(name: "Ag1", bytes: bytes);
 
-            var result = await _datacard.Save(bytes);
-            Assert.AreEqual(Path.Combine(_configFake.DatacardsDirectory, result, "Datacard.zip"), _fileSystemFake.WrittenFile);
+            var result = await _datacard.Save(newDatacard);
+            Assert.Contains(Path.Combine(_configFake.DatacardsDirectory, result, "Datacard.zip"), _fileSystemFake.WrittenFiles);
             Assert.AreEqual(bytes, _fileSystemFake.WrittenBytes);
+            Assert.Contains(Path.Combine(_configFake.DatacardsDirectory, result, "Datacard.json"), _fileSystemFake.WrittenFiles);
+            Assert.AreEqual(JsonConvert.SerializeObject(newDatacard, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }), _fileSystemFake.WrittenText);
+        }
+
+        [Test]
+        public async Task ShouldGetDatacards()
+        {
+            SetupDatacard("Something");
+            SetupDatacard("Something1");
+            SetupDatacard("Something2");
+
+            var datacards = await _datacard.GetDatacards();
+            Assert.AreEqual(3, datacards.Length);
         }
 
         private ApplicationDataModel CreateDataModelWithFieldBoundaries()
@@ -154,13 +175,21 @@ namespace Adapt.Analyzer.Core.Test.Datacards
         private Datacard CreateDatacard()
         {
             var datacardPath = new DatacardPath(_configFake);
-            var datacardWriter = new DatacardWriter(datacardPath, _fileSystemFake);
+            var datacardWriter = new DatacardWriter(datacardPath, _fileSystemFake, _serializer);
             var datacardExtractor = new DatacardExtractor(datacardPath, _fileSystemFake);
-            var datacardStorage = new DatacardStorage(datacardWriter, datacardExtractor, _pluginFactory);
+            var datacardStorage = new DatacardStorage(datacardPath, datacardWriter, datacardExtractor, _pluginFactory, _fileSystemFake, _serializer);
             var datacardPluginFinder = new DatacardPluginFinder();
             var datacardMetadataReader = new DatacardMetadataReader();
             var datacardTotalsCalculator = new DatacardTotalsCalculator(new FieldTotalsCalculator());
             return new Datacard(datacardStorage, datacardPluginFinder, datacardMetadataReader, datacardTotalsCalculator, new FieldBoundaryReader());
+        }
+
+        private void SetupDatacard(string directory)
+        {
+            _fileSystemFake.Directories.Add(directory);
+
+            var datacardModel = new DatacardModel(name: "name");
+            _fileSystemFake.FileText[Path.Combine(_configFake.DatacardsDirectory, directory, "Datacard.json")] = _serializer.Serialize(datacardModel);
         }
     }
 }

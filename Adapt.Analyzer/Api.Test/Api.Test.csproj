@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Datacards\Boundaries\BoundariesControllerTest.cs" />
+    <Compile Include="Datacards\DatacardsControllerTest.cs" />
     <Compile Include="Datacards\Metadata\MetadataControllerTest.cs" />
     <Compile Include="Datacards\Plugins\PluginsControllerTest.cs" />
     <Compile Include="Datacards\Totals\TotalsControllerTest.cs" />

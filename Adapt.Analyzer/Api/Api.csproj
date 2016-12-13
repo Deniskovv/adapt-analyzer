@@ -124,10 +124,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Datacards\Boundaries\BoundariesController.cs" />
+    <Compile Include="Datacards\DatacardsController.cs" />
     <Compile Include="Datacards\Metadata\MetadataController.cs" />
     <Compile Include="Datacards\Plugins\PluginsController.cs" />
     <Compile Include="Datacards\Totals\TotalsController.cs" />
     <Compile Include="Datacards\Upload\UploadController.cs" />
+    <Compile Include="Datacards\Upload\UploadedDatacard.cs" />
     <Compile Include="HelloController.cs" />
     <Compile Include="HttpConfigFactory.cs" />
     <Compile Include="Middleware\LoggingMiddleware.cs" />

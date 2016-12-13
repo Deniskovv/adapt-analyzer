@@ -9,6 +9,9 @@ namespace Adapt.Analyzer.Core.General
         void ExtractZip(string zipFilePath, string destinationPath);
         bool DirectoryExists(string directoryPath);
         void CreateDirectory(string directoryPath);
+        void WriteAllText(string path, string content);
+        string[] GetDirectories(string path);
+        string ReadAllText(string path);
     }
 
     public class FileSystem : IFileSystem
@@ -31,6 +34,21 @@ namespace Adapt.Analyzer.Core.General
         public void CreateDirectory(string directoryPath)
         {
             Directory.CreateDirectory(directoryPath);
+        }
+
+        public void WriteAllText(string path, string content)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string[] GetDirectories(string path)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string ReadAllText(string path)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

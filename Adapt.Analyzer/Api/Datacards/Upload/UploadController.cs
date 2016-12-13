@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Adapt.Analyzer.Core.Datacards;
+using Adapt.Analyzer.Core.Datacards.Models;
+using Adapt.Analyzer.Core.Datacards.Storage.Models;
 
 namespace Adapt.Analyzer.Api.Datacards.Upload
 {
@@ -22,10 +25,11 @@ namespace Adapt.Analyzer.Api.Datacards.Upload
 
         [Route("")]
         [HttpPost]
-        public async Task<IHttpActionResult> Upload()
+        public async Task<IHttpActionResult> Upload([FromBody] UploadedDatacard uploadedDatacard)
         {
-            var bytes = await Request.Content.ReadAsByteArrayAsync();
-            var id = await _datacard.Save(bytes);
+            var bytes = Convert.FromBase64String(uploadedDatacard.File);
+            var newDatacard = new DatacardModel(name: uploadedDatacard.Name, bytes: bytes);
+            var id = await _datacard.Save(newDatacard);
             return Ok(id);
         }
     }

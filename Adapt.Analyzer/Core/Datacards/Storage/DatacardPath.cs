@@ -9,6 +9,7 @@ namespace Adapt.Analyzer.Core.Datacards.Storage
         string GetExtractPath(string id);
         string GetDatacardsPath();
         string GetDatacardPath(string id);
+        string GetJsonFilePath(string id);
     }
 
     public class DatacardPath : IDatacardPath
@@ -39,6 +40,11 @@ namespace Adapt.Analyzer.Core.Datacards.Storage
         public string GetDatacardPath(string id)
         {
             return Path.Combine(_datacardsDirectory, id);
+        }
+
+        public string GetJsonFilePath(string id)
+        {
+            return Path.Combine(_datacardsDirectory, id, "Datacard.json");
         }
 
         public string GetDatacardsPath()

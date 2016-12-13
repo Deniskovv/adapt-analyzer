@@ -1,9 +1,9 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http.Results;
 using Adapt.Analyzer.Api.Datacards.Upload;
 using Fakes.Datacards;
-using Fakes.Datacards.Save;
 using NUnit.Framework;
 
 namespace Adapt.Analyzer.Api.Test.Datacards.Upload
@@ -24,12 +24,14 @@ namespace Adapt.Analyzer.Api.Test.Datacards.Upload
         [Test]
         public async Task UploadShouldSaveFileToDatacardsDirectory()
         {
-            var bytes = new byte[] {34, 23, 7, 6, 8, 23};
-            _uploadController.Request = new HttpRequestMessage(HttpMethod.Post, "")
+            var bytes = new byte[] { 34, 23, 7, 6, 8, 23 };
+            var uploadedDatacard = new UploadedDatacard
             {
-                Content = new ByteArrayContent(bytes)
+                File = Convert.ToBase64String(bytes),
+                Name = "This"
             };
-            var result = (OkNegotiatedContentResult<string>)await _uploadController.Upload();
+
+            var result = (OkNegotiatedContentResult<string>) await _uploadController.Upload(uploadedDatacard);
 
             Assert.AreEqual(_datacardFake.WrittenBytes, bytes);
             Assert.AreEqual(_datacardFake.NewId, result.Content);
