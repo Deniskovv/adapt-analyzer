@@ -34,28 +34,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ADMPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AgGatewayADMPlugin.1.0.0.22\lib\ADMPlugin.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\AgGatewayADMPlugin.1.0.0.26\lib\ADMPlugin.dll</HintPath>
     </Reference>
     <Reference Include="AgGateway.ADAPT.ApplicationDataModel, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AgGatewayADAPTFramework.1.1.0.6\lib\AgGateway.ADAPT.ApplicationDataModel.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\AgGatewayADAPTFramework.1.1.0.10\lib\AgGateway.ADAPT.ApplicationDataModel.dll</HintPath>
     </Reference>
     <Reference Include="AgGateway.ADAPT.ISOv4Plugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AgGatewayISOPlugin.1.0.0.9\lib\AgGateway.ADAPT.ISOv4Plugin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="AgGateway.ADAPT.PluginManager, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AgGatewayADAPTFramework.1.1.0.6\lib\AgGateway.ADAPT.PluginManager.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\AgGatewayADAPTFramework.1.1.0.10\lib\AgGateway.ADAPT.PluginManager.dll</HintPath>
     </Reference>
     <Reference Include="AgGateway.ADAPT.Representation, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AgGatewayADAPTFramework.1.1.0.6\lib\AgGateway.ADAPT.Representation.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\AgGatewayADAPTFramework.1.1.0.10\lib\AgGateway.ADAPT.Representation.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="log4net, Version=2.0.7.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>

@@ -13,3 +13,4 @@ bin/
 
 # WebStorm
 .idea/
+results.*.xml
